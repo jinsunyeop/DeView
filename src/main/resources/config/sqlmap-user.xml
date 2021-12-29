@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="userDao">
+
+	<select id="userList" resultType="userDto"> <!-- resultType은 result가 리스트로 반환되는데 리스트를 member 객체로 반환된다는 뜻 -->
+		SELECT * FROM USER ORDER BY user_id;
+	</select>
+	
+	<select id="selectById" parameterType="int" resultType="userDto">
+		SELECT * FROM USER WHERE user_id=#{userId};
+	</select>
+	
+	<insert id="insertUser" parameterType="userDto">
+		INSERT INTO USER(birth,name,nickname,gender,email,password)
+		VALUES (#{birth},#{name},#{nickname},#{gender},#{email},#{password})
+		<selectKey keyProperty="userId" resultType="int">
+			SELECT IFNULL(MAX(user_id),0)+1 FROM USER  <!-- oracle사용 경 SELECT NVL(MAX(id),0) FROM member -->
+		</selectKey> 
+	</insert>
+	
+	<update id="updateUser" parameterType="userDto">
+		UPDATE USER SET age=#{age},password=#{password},nickname=#{nickname} WHERE user_id=#{userId};
+	</update>
+	
+	<delete id="deleteUser" parameterType="userDto">
+		DELETE FROM USER WHERE email=#{email} AND password= #{password};
+	</delete>
+	
+	
+<select id="selectByEmail" parameterType="String" resultType="userDto">
+		SELECT * FROM USER WHERE email=#{email} 
+	</select>
+
+	<delete id="changePw" parameterType="userDto">
+		UPDATE USER SET password=#{password} WHERE email=#{email};
+	</delete>
+<!-- 
+	<update id="member.update" parameterType="member">
+		UPDATE member SET name=#{name},password=#{password} WHERE email=#{email}
+	</update>
+
+	<delete id="member.delete" parameterType="member">
+		DELETE FROM MEMBER WHERE email=#{email} AND password= #{password}
+	</delete>
+
+	<select id="member.count" resultType="Integer">
+		SELECT COUNT(*) FROM member;
+	</select>
+	
+	<select id="member.selectByRegdate" parameterType="HashMap" resultType="member">
+		SELECT * FROM member WHERE regdate BETWEEN #{from} AND #{to} ORDER BY regdate DESC
+	</select>
+	
+	<select id="member.selectById" parameterType="Long" resultType="member">
+		SELECT * FROM member WHERE id=#{id}
+	</select>
+ -->
+</mapper>
+
