@@ -2,7 +2,7 @@ package user.dto;
 
 import org.apache.ibatis.type.Alias;
 
-@Alias(value = "userDTO")
+@Alias(value = "userDto")
 public class UserDto {
 	private int userId; //primary key
 	private String birth; //나이

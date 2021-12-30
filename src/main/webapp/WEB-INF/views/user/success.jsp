@@ -11,7 +11,7 @@
 <body>
 	<h1>환영합니다</h1>
 	${member.name}
-	<p><a href="<c:url value='/login'/>">[로그인]</a> </p>
+	<p><a href="<c:url value='/user/login'/>">[로그인]</a> </p>
 
 </body>
 </html>
