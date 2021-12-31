@@ -23,7 +23,7 @@
    		<beans:property name="dataSource" ref="dataSource"/>
    	</beans:bean>
    	
-   	  <view-controller path="/main" view-name="main"/> 
+   	  <view-controller path="/main/main" view-name="main/main"/> 
   <!--  별도의 모델이나 컨트롤러가 없이 URL요청이 왔을때 뷰로 연결만 해주는 경우는 굳이 컨트롤러가 필요없이
   <mvc:view-controller>태그를 사용하면 URL과  뷰를 매핑해 줄 수 있습니다./WEB-INF/views/main.jsp -->
 
@@ -102,6 +102,15 @@
 		<beans:property name="maxUploadSize" value="209715200"/>
 		<beans:property name="defaultEncoding" value="UTF-8"/>
    	</beans:bean>
+   	
+   	<!-- 인터셉터 설정 -->
+   	<interceptors>
+   		<interceptor>
+   			<mapping path="/user/profile/**"/>
+   			<beans:bean class="interceptor.UserCheckInterceptor"/>
+   		</interceptor>
+   	</interceptors>
+   	
 	
 	
 </beans:beans>

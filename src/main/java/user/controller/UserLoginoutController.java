@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import user.dto.MemberNotMatchingException;
-import user.dto.PwNotMatchingException;
+import exception.MemberNotMatchingException;
+import exception.PwNotMatchingException;
 import user.dto.UserDto;
 import user.service.UserService;
 
@@ -34,7 +34,7 @@ public class UserLoginoutController {
 		//만약 로그인이 되서 세션이 겟 됫으면 login을 요청해도 메인으로 가게
 		Object user = session.getAttribute("user");
 		if(user !=null) {
-			return "/main";
+			return "/main/main";
 		}
 		
 		LoginCommand loginCommand = new LoginCommand();
@@ -70,7 +70,7 @@ public class UserLoginoutController {
 			}
 			resp.addCookie(rememberCookie);
 			
-			return "redirect:/main";
+			return "redirect:/main/main";
 		}catch(MemberNotMatchingException e) {
 			model.addAttribute("msg1","없는 회원 정보입니다.");
 			return "/user/login";
@@ -84,7 +84,7 @@ public class UserLoginoutController {
 	@RequestMapping(value="/user/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/main";
+		return "redirect:/main/main";
 	}
 
 }

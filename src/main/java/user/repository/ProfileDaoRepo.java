@@ -31,6 +31,13 @@ public  class ProfileDaoRepo implements ProfileDao {
 	public ProfileDto selectProfile(int userId) {
 		return sqlSessionTemplate.selectOne("selectProfile",userId);
 		}
+
+
+	@Override
+	public int countProfile(int userId) {
+		
+		return sqlSessionTemplate.selectOne("countProfile",userId);
+	}
 	
 	
 

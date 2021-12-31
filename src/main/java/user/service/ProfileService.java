@@ -32,6 +32,10 @@ public class ProfileService {
 		
 	}
 	
+	public int countProfile(int userId) {
+		return profileDao.countProfile(userId);
+	}
+	
 	
 	
 

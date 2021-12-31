@@ -11,6 +11,10 @@
 		SELECT * FROM PROFILE WHERE user_id=#{userId};
 	</select>
 	
+	<select id="countProfile" parameterType="int" resultType="int">
+		SELECT count(*) FROM PROFILE WHERE user_id=#{userId};
+	</select>
+	
 
 	<insert id="insertProfile" parameterType="profileDto">
 		INSERT INTO PROFILE(user_id,git_add,img_name)
@@ -18,7 +22,7 @@
 	</insert>
 	
 	<update id="updateProfile" parameterType="profileDto">
-		UPDATE PROFILE SET git_add=#{gitAdd},img_name=imgName WHERE user_id=#{userId};
+		UPDATE PROFILE SET git_add=#{gitAdd},img_name=#{imgName} WHERE user_id=#{userId};
 	</update>
 	
 

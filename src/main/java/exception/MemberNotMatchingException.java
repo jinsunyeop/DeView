@@ -1,4 +1,4 @@
-package user.dto;
+package exception;
 
 public class MemberNotMatchingException extends RuntimeException {
 

@@ -3,8 +3,8 @@ package user.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import user.dto.MemberNotMatchingException;
-import user.dto.PwNotMatchingException;
+import exception.MemberNotMatchingException;
+import exception.PwNotMatchingException;
 import user.dto.UserDto;
 import user.repository.UserDao;
 

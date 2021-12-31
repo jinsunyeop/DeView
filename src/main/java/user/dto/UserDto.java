@@ -2,6 +2,8 @@ package user.dto;
 
 import org.apache.ibatis.type.Alias;
 
+import exception.PwNotMatchingException;
+
 @Alias(value = "userDto")
 public class UserDto {
 	private int userId; //primary key
