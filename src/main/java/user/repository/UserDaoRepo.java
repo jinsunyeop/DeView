@@ -27,7 +27,7 @@ public class UserDaoRepo implements UserDao {
 		return sqlSessionTemplate.selectOne("selectById", userId);
 	}
 
-	public int deleteMember(UserDto user) {
+	public int deleteUser(UserDto user) {
 		return sqlSessionTemplate.delete("deleteUser",user);
 	}
 

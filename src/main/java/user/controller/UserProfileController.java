@@ -1,6 +1,7 @@
 package user.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.Normalizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,16 +63,14 @@ public class UserProfileController {
 		String path = "/resources//image";
 		
 		String fileName = img.getOriginalFilename();
-		
+		System.out.println(fileName);
 		fileName = Normalizer.normalize(fileName, Normalizer.Form.NFC); //Mac에서 만든 파일을 윈도우에서 사용할땐 자모가 분리될 수 있는 현상
 		String filePath=req.getServletContext().getRealPath("/")+path;
-//		String filePath="/Users/sunyeop2/Desktop/STS/image";
-		File f = new File(filePath);
-		
-		if(!f.exists()) {
-			f.mkdir();
-			System.out.println("파일 없음");
-		}
+//		File f = new File(filePath);	
+//		if(!f.exists()) {
+//			f.mkdir();
+//			System.out.println("파일 없음");
+//		}
 		
 		if(bindingResult.hasErrors()) {
 			System.out.println(bindingResult.getAllErrors());
@@ -84,8 +83,12 @@ public class UserProfileController {
 				img.transferTo(p);
 				profile.setImgName(fileName);
 				profileService.insertProfile(profile);
-			}catch(Exception e) {
+			}catch(RuntimeException e) {
+				System.out.println("열로1");
 				return "/profile/profile";
+			} catch (IOException e) {
+				System.out.println("열로2");
+				e.printStackTrace();
 			}
 		}else {
 			profileService.insertProfile(profile);
@@ -110,18 +113,17 @@ public class UserProfileController {
 			BindingResult bindingResult,@RequestParam(value="img",required=false)MultipartFile img,
 			Model model,HttpServletRequest req) {
 		String oldImgName =  req.getParameter("oldImgName");
-
+		
 		String path = "/resources//image";
 		
 		String fileName = img.getOriginalFilename();
 		
 		fileName = Normalizer.normalize(fileName, Normalizer.Form.NFC); 
 		String filePath=req.getServletContext().getRealPath("/")+path;
-		File f = new File(filePath);
 		
 		if(bindingResult.hasErrors()) {
 			System.out.println(bindingResult.getAllErrors());
-			return"/user/profile/edit";
+			return"/profile/edit";
 		}
 		
 		if(fileName != oldImgName) {

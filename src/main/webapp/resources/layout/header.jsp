@@ -3,8 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%-- <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
- --%><%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html>
@@ -29,9 +28,12 @@
 		  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 		    <div class="navbar-nav">
 		      <a class="nav-item nav-link active" href="<c:url value="/main/main"/>">Home</a>
-		      <a class="nav-item nav-link" href="#">Features</a>
-		      <a class="nav-item nav-link" href="#">Pricing</a>
-		      <a class="nav-item nav-link disabled" href="#">Disabled</a>
+		    <c:if test="${empty sessionScope.user}">
+		      	<a class="nav-item nav-link" href="<c:url value='/user/login'/>">Start DeView</a>
+			</c:if>
+			<c:if test="${not empty sessionScope.user}">
+	 	  		 <a class="nav-item nav-link text-light" href="<c:url value='/start/deview'/>">Start DeView</a>
+	 	   </c:if>
 		    </div>
 		  </div>
 	 	   <nav class="navbar navbar-dark" >

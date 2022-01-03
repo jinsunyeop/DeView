@@ -26,7 +26,7 @@
 	</update>
 	
 	<delete id="deleteUser" parameterType="userDto">
-		DELETE FROM USER WHERE email=#{email} AND password= #{password};
+		DELETE FROM USER WHERE email=#{email};
 	</delete>
 	
 	

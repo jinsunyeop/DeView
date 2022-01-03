@@ -12,7 +12,7 @@ public interface UserDao {
 	
 	public abstract UserDto selectId(int userId); //ID를 통해 유저를 조회하는 메서드
 	
-	public abstract int deleteMember(UserDto user); //유저 정보를 삭제하는 메서드
+	public abstract int deleteUser(UserDto user); //유저 정보를 삭제하는 메서드
 
 	public abstract int updateMeber(UserDto user); //유저 정보를 수정하는 메서드
 

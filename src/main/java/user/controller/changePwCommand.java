@@ -2,7 +2,7 @@ package user.controller;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class chagePwCommand {
+public class changePwCommand {
 	
 	@NotEmpty(message="필수 항목입니다.")
 	private String currentPassword;

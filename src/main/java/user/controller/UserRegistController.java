@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import exception.DoNotAgreeException;
 import exception.MemberNotMatchingException;
 import exception.PwNotMatchingException;
 import user.dto.UserDto;
@@ -61,7 +62,7 @@ public class UserRegistController {
 //		위에는 회원 가입 형식 검증
 		try {
 			userService.insertUser(user);
-			return "user/success";
+			return "redirect:/user/login";
 		}catch(DuplicateKeyException e) {
 			errors.rejectValue("email", "AlreadyRegist");
 			return "user/regist";
@@ -72,14 +73,14 @@ public class UserRegistController {
 	@RequestMapping(value="/user/changePw",method=RequestMethod.GET)
 	public ModelAndView change(Model model){
 		ModelAndView mv = new ModelAndView();
-		model.addAttribute("changePw", new chagePwCommand());
+		model.addAttribute("changePw", new changePwCommand());
 		mv.addObject("changePw");
 		mv.setViewName("/user/changePw");
 		return mv;
 	}
 	
 	@RequestMapping(value="/user/changePw",method=RequestMethod.POST)
-	public String change(@ModelAttribute("changePw") @Valid chagePwCommand edit,BindingResult bindingResult,
+	public String change(@ModelAttribute("changePw") @Valid changePwCommand edit,BindingResult bindingResult,
 						HttpSession session,Errors errors){
 		if(bindingResult.hasErrors()) {
 			return "/user/changePw";
@@ -87,17 +88,49 @@ public class UserRegistController {
 		UserDto user = (UserDto)session.getAttribute("user");
 		try {
 			userService.changePw(user.getEmail(), edit.getCurrentPassword(), edit.getNewPassword());
-			return "/main";
+			return "/profile/profile";
 		}catch(PwNotMatchingException e) {
-			errors.reject("MemberNotMatching");
+			errors.reject("NotMatchPassword");
 			return "/user/changePw";
 		}catch(MemberNotMatchingException e) {
 			errors.reject("MemberNotMatching");
-			return "/users/changePw";
+			return "/user/changePw";
 		}
 	}
 	
+	//회원 탈퇴
+	@RequestMapping(value="/user/delete",method=RequestMethod.GET)
+	public String delete(Model model,HttpSession session){
+		model.addAttribute("delete", new DeleteCommand());
+		
+		
+		return "/user/deleteUser";
+	}
 	
+
+	
+	
+	@RequestMapping(value="/user/delete",method=RequestMethod.POST)
+	public String delete(@ModelAttribute("delete") @Valid DeleteCommand deleteCommand,BindingResult bindingResult,Errors errors){
+		if(bindingResult.hasErrors()) {
+			return "/user/deleteUser";
+		}
+		DeleteCommand confirm= deleteCommand;
+		System.out.println(confirm.toString());
+		try {
+			userService.delete(confirm.getEmail(), confirm.isAgree(),confirm.getPassword());
+			return "/profile/profile";
+		}catch(PwNotMatchingException e) {
+			errors.reject("NotMatchPassword");
+			return "/user/deleteUser";
+		}catch(MemberNotMatchingException e) {
+			errors.reject("MemberNotMatching");
+			return "/user/deleteUser";
+		}catch( DoNotAgreeException e) {
+			errors.reject("DoNotAgree");
+			return "/user/deleteUser";
+		}
+	}
 	
 	
 	
