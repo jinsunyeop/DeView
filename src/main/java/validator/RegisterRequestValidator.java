@@ -16,12 +16,9 @@ public class RegisterRequestValidator implements Validator{
 			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
 			"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 	
-	private static final String ageRegExp="^[0-9]+$";
 
 	private Pattern pattern;
 	
-	private Pattern pattern2;
-
 
 	public RegisterRequestValidator() {
 		pattern = Pattern.compile(emailRegExp);
@@ -33,19 +30,18 @@ public class RegisterRequestValidator implements Validator{
 
 	public void validate(Object target, Errors errors) { //target은 검사 대상 객체 errors는 검사 결과 에러코드를 저장하는 객체
 		UserDto user = (UserDto) target;
-		if(user.getEmail()==null||user.getEmail().trim().isEmpty()) {
-			errors.rejectValue("email", "required");
+		if(user.getUserEmail()==null||user.getUserEmail().trim().isEmpty()) {
+			errors.rejectValue("userEmail", "required");
 		}else{
-			Matcher matcher = pattern.matcher(user.getEmail());
+			Matcher matcher = pattern.matcher(user.getUserEmail());
 			if(!matcher.matches()) {
-				errors.rejectValue("email", "notEmailPattern");
+				errors.rejectValue("userEmail", "notEmailPattern");
 			}
 		
 		}
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "required");
-		ValidationUtils.rejectIfEmpty(errors, "password","required");
-		ValidationUtils.rejectIfEmpty(errors, "nickname","required");
-		ValidationUtils.rejectIfEmpty(errors, "gender","required");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "required");
+		ValidationUtils.rejectIfEmpty(errors, "userPassword","required");
+		ValidationUtils.rejectIfEmpty(errors, "userGender","required");
 
 	}
 }

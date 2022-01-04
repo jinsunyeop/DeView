@@ -6,63 +6,57 @@ import exception.PwNotMatchingException;
 
 @Alias(value = "userDto")
 public class UserDto {
-	private int userId; //primary key
-	private String birth; //나이
-	private String name; //이름
-	private String nickname; //닉네임
-	private String gender; //성별
-	private String email; //이메일 
-	private String password;
+	private int userId; //primary key 유저 번호
+	private String userName; //유저 이름
+	private String userGender; //유저 성별
+	private String userEmail; //유저 이메일
+	private String userPassword; //유저 비밀번호
+	private boolean userStatus; // 관리자 여부
+	
 	public int getUserId() {
 		return userId;
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public String getBirth() {
-		return birth;
+	public String getUserName() {
+		return userName;
 	}
-	public void setBirth(String birth) {
-		this.birth = birth;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-	public String getName() {
-		return name;
+	public String getUserGender() {
+		return userGender;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setUserGender(String userGender) {
+		this.userGender = userGender;
 	}
-	public String getNickname() {
-		return nickname;
+	public String getUserEmail() {
+		return userEmail;
 	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
-	public String getGender() {
-		return gender;
+
+	public String getUserPassword() {
+		return userPassword;
 	}
-	public void setGender(String gender) {
-		this.gender = gender;
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
-	public String getEmail() {
-		return email;
+	public boolean isUserStatus() {
+		return userStatus;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUserStatus(boolean userStatus) {
+		this.userStatus = userStatus;
 	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
 	public boolean matchPw(String password) {
-		return this.password.equals(password);
+		return this.userPassword.equals(password);
 	}
 	public void changePassword(String currentPw,String newPw) {
-		if(!password.equals(currentPw))
+		if(!userPassword.equals(currentPw))
 			throw new PwNotMatchingException();
-		this.password=newPw;
+		this.userPassword=newPw;
 	}
 
 

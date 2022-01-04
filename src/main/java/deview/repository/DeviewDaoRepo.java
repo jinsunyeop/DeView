@@ -16,6 +16,12 @@ public class DeviewDaoRepo implements DeviewDao {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 	
+
+	@Override
+	public DeviewDto selectDeview(int userId) {
+		return 	sqlSessionTemplate.selectOne("selectDeview",userId);		 //전체 조회
+	}
+	
 	
 	@Override
 	public List<DeviewDto> deviewAllList() {
@@ -27,9 +33,13 @@ public class DeviewDaoRepo implements DeviewDao {
 		return 	sqlSessionTemplate.selectOne("countDeview");	
 	}
 
+	
 	@Override
 	public void insertDeview(DeviewDto Deview) {
 		sqlSessionTemplate.insert("insertDeview",Deview);		
 	}
+
+
+
 
 }

@@ -8,15 +8,22 @@
 		<form:form commandName="profile" method="POST" enctype="multipart/form-data" name="popupForm" onsubmit="popupSubmit()">
 		<form:errors/>
 	 	<form:hidden path="userId" value="${sessionScope.user.userId}"/> <!-- 외래키로 가져가야하므로 필수 -->
-			 <div class="mb-3 mt-3">
-					<form:label path="gitAdd" class="form-label">Git address</form:label> <form:errors path="gitAdd"/>
-					<form:input path="gitAdd" class="form-control" placeholder="${profile.gitAdd}"/>	
-			</div>
 		 	 <div class="mb-3 mt-3">
 					<label class="form-label">Profile Img</label>
 					<input type="file" name="img" accept="image/jpg,image/jpeg,image/png" class="form-control" id="imgSelector" >
-						<!-- accept="image/jpg,image/jpeg,image/png"을 통해 이미지만 첨부할수 있도록 처리 -->
-	 				
+			</div>
+			<form:label path="profileGit" for="basic-url" class="form-label">Git address</form:label> <form:errors path="profileGit"/>
+			 <div class="input-group mb-3 mt-3">
+					  <span class="input-group-text" id="basic-addon3">https://github.com/..</span>
+					<form:input path="profileGit" class="form-control" placeholder="${profile.profileGit}" id="basic-url" aria-describedby="basic-addon3"/>	
+			</div>
+			 <div class="mb-3 mt-3">
+					<form:label path="profileNick" class="form-label">NickName</form:label> <form:errors path="profileNick"/>
+					<form:input path="profileNick" class="form-control" placeholder="${profile.profileNick}"/>	
+			</div>
+			 <div class="mb-3 mt-3">
+					<form:label path="profileJob" class="form-label">JOB</form:label> 
+					<form:input path="profileJob" class="form-control" placeholder="${profile.profileJob}"/>	
 			</div>
 			<button type="submit" class="btn btn-outline-secondary">설정</button> 
 		</form:form>

@@ -17,12 +17,13 @@
 	
 
 	<insert id="insertProfile" parameterType="profileDto">
-		INSERT INTO PROFILE(user_id,git_add,img_name)
-		VALUES (#{userId},#{gitAdd},#{imgName});
+		INSERT INTO PROFILE(user_id,profile_git,profile_nick,profile_img,profile_job)
+		VALUES (#{userId},#{profileGit},#{profileNick},#{profileImg},#{profileJob});
 	</insert>
 	
 	<update id="updateProfile" parameterType="profileDto">
-		UPDATE PROFILE SET git_add=#{gitAdd},img_name=#{imgName} WHERE user_id=#{userId};
+		UPDATE PROFILE SET profile_git=#{profileGit},profile_nick=#{profileNick},
+		profile_img=#{profileImg},profile_job=#{profileJob}  WHERE user_id=#{userId};
 	</update>
 	
 

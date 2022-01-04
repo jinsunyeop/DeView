@@ -8,31 +8,24 @@
 <form:form action="success" commandName="user">
 <form:errors/>
  <div class="mt-3 mb-3">
-	<form:label path="email" class="form-label ">이메일</form:label>	<form:errors path="email" class="mx-3"/>
-	<form:input path="email" class="form-control" placeholder="name@example.com"/>
+	<form:label path="userEmail" class="form-label ">이메일</form:label>	<form:errors path="userEmail" class="mx-3"/>
+	<form:input path="userEmail" class="form-control" placeholder="name@example.com"/>
 </div>
 <div class="mb-3">
-	<form:label path="name" class="form-label">이름</form:label>	 <form:errors path="name" class="mx-3"/>
-	<form:input path="name" class="form-control" placeholder="홍길동"/>
+	<form:label path="userName" class="form-label">이름</form:label>	 <form:errors path="userName" class="mx-3"/>
+	<form:input path="userName" class="form-control" placeholder="홍길동"/>
 </div>
-<div class="mb-3">
-	<form:label path="birth" class="form-label">생년월일</form:label>
-	<input type="date" name="birth" class="form-control" required/>
-</div>
-<div class="mb-3">
-	<form:label path="nickname" class="form-label">닉네임</form:label> <form:errors path="nickname" class="mx-3"/>
-	<form:input path="nickname"  class="form-control" placeholder="devGildong"/>
-</div>
+
 <div class="mb-1">
-	<form:label path="gender" class="form-label">성별</form:label>	<form:errors path="gender" class="mx-3"/>
+	<form:label path="userGender" class="form-label">성별</form:label>	<form:errors path="userGender" class="mx-3"/>
 </div>
 <div class="mb-3">
-	<input type="radio"  value="남자" name="gender"  class="form-check-input"/> 남자    
-	<input type="radio"  value="여자" name="gender"  class="form-check-input" /> 여자
+	<input type="radio"  value="남자" name="userGender"  class="form-check-input"/> 남자    
+	<input type="radio"  value="여자" name="userGender"  class="form-check-input" /> 여자
 </div>
 <div class="mb-3">
-	<form:label path="password" class="form-label">비밀번호</form:label>	<form:errors path="password" class="mx-3"/>
-	<form:password path="password" class="form-control" placeholder="password"/>
+	<form:label path="userPassword" class="form-label">비밀번호</form:label>	<form:errors path="userPassword" class="mx-3"/>
+	<form:password path="userPassword" class="form-control" placeholder="password"/>
 </div>
 <div class="mb-5">
 	<label class="form-label">비밀번호 확인</label>

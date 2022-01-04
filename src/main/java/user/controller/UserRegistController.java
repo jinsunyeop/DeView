@@ -51,9 +51,9 @@ public class UserRegistController {
 			@RequestParam(value="confirmPw", required=true) String confirmPw) {
 		
 		new RegisterRequestValidator().validate(user, errors);
-		if(!user.getPassword().isEmpty()) {
-			if(!user.getPassword().equals(confirmPw)) {
-				errors.rejectValue("password", "NotMatchPassword");
+		if(!user.getUserPassword().isEmpty()) {
+			if(!user.getUserPassword().equals(confirmPw)) {
+				errors.rejectValue("userPassword", "NotMatchPassword");
 			}
 		}	
 		if(errors.hasErrors()) {
@@ -64,7 +64,7 @@ public class UserRegistController {
 			userService.insertUser(user);
 			return "redirect:/user/login";
 		}catch(DuplicateKeyException e) {
-			errors.rejectValue("email", "AlreadyRegist");
+			errors.rejectValue("userEmail", "AlreadyRegist");
 			return "user/regist";
 		}				
 	}
@@ -87,7 +87,7 @@ public class UserRegistController {
 		}
 		UserDto user = (UserDto)session.getAttribute("user");
 		try {
-			userService.changePw(user.getEmail(), edit.getCurrentPassword(), edit.getNewPassword());
+			userService.changePw(user.getUserEmail(), edit.getCurrentPassword(), edit.getNewPassword());
 			return "/profile/profile";
 		}catch(PwNotMatchingException e) {
 			errors.reject("NotMatchPassword");
@@ -119,7 +119,7 @@ public class UserRegistController {
 		System.out.println(confirm.toString());
 		try {
 			userService.delete(confirm.getEmail(), confirm.isAgree(),confirm.getPassword());
-			return "/profile/profile";
+			return "redirect:/main/main";
 		}catch(PwNotMatchingException e) {
 			errors.reject("NotMatchPassword");
 			return "/user/deleteUser";

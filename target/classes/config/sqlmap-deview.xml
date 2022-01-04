@@ -20,8 +20,8 @@
 	</select>
 
 	<insert id="insertDeview" parameterType="deviewDto">
-			INSERT INTO DEVIEW(user_id,title,content,career,contact,number,price
-			VALUES (#{userId},,#{title}#{content},#{career},#{contact},#{number},#{price})
+			INSERT INTO DEVIEW(user_id,dev_title,dev_bigcate,dev_smallcate,dev_content,dev_number,dev_price)
+			VALUES (#{userId},#{devTitle},#{devBigcate},#{devSmallcate},#{devContent},#{devNumber},#{devPrice})
 <!-- 	 		<selectKey keyProperty="id" resultType="Long">
 				SELECT IFNULL(MAX(ID),0)+1 FROM member  oracle사용 경우 SELECT NVL(MAX(id),0) FROM member
 			</selectKey>   -->

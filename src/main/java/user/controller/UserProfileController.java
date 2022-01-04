@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import deview.service.DeviewService;
 import user.dto.ProfileDto;
 import user.dto.UserDto;
 import user.service.ProfileService;
@@ -28,6 +28,10 @@ public class UserProfileController {
 
 	@Autowired
 	private ProfileService profileService;
+	
+	@Autowired
+	private DeviewService deviewService;
+
 
 	public void setProfileService(ProfileService profileService) {
 		this.profileService = profileService;
@@ -38,7 +42,10 @@ public class UserProfileController {
 		UserDto user = (UserDto)session.getAttribute("user");
 		int uId=user.getUserId();
 		if(profileService.countProfile(uId)!=0) {
-			model.addAttribute("profile",profileService.selectProfile(user.getUserId()));
+			model.addAttribute("profile",profileService.selectProfile(uId));
+			if(deviewService.selectDeview(uId)!=null) {
+				model.addAttribute("deview",deviewService.selectDeview(uId));
+			}
 		}
 		return "/profile/profile";
 
@@ -81,7 +88,7 @@ public class UserProfileController {
 			try {
 				File p =  new File(filePath+"/"+fileName);
 				img.transferTo(p);
-				profile.setImgName(fileName);
+				profile.setProfileImg(fileName);
 				profileService.insertProfile(profile);
 			}catch(RuntimeException e) {
 				System.out.println("열로1");
@@ -131,13 +138,13 @@ public class UserProfileController {
 				File p =  new File(filePath+"/"+fileName);
 				img.transferTo(p);
 				new File(filePath+"/"+ oldImgName).delete(); //기존 파일 삭제
-				profile.setImgName(fileName);
+				profile.setProfileImg(fileName);
 				profileService.updateProfile(profile);
 			}catch(Exception e) {
 				return "/profile/profile";
 			}
 		}else{
-			profile.setImgName(oldImgName);
+			profile.setProfileImg(oldImgName);
 			profileService.updateProfile(profile);
 			return "/profile/profile";
 		}
