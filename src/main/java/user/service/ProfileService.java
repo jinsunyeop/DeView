@@ -1,5 +1,7 @@
 package user.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,9 @@ public class ProfileService {
 		return profileDao.countProfile(userId);
 	}
 	
+	public List<ProfileDto> joinDeview(){
+		return profileDao.deviewJoinProfile();
+	}
 	
 	
 

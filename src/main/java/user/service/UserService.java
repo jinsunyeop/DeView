@@ -24,6 +24,11 @@ public class UserService {
 		userDao.insertUser(user);
 	}
 	
+	//유저 조회
+	public UserDto selectId(int userId) {
+		return userDao.selectId(userId);
+	}
+	
 	
 	//비밀번호 변경 
 	public void changePw(String email,String currentPw,String newPw) {

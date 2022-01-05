@@ -23,7 +23,7 @@
    		<beans:property name="dataSource" ref="dataSource"/>
    	</beans:bean>
    	
-   	  <view-controller path="/main/main" view-name="main/main"/> 
+   	 <!--  <view-controller path="/main/main" view-name="main/main"/>  -->
   <!--  별도의 모델이나 컨트롤러가 없이 URL요청이 왔을때 뷰로 연결만 해주는 경우는 굳이 컨트롤러가 필요없이
   <mvc:view-controller>태그를 사용하면 URL과  뷰를 매핑해 줄 수 있습니다./WEB-INF/views/main.jsp -->
 
@@ -48,6 +48,7 @@
 <!-- 	<context:component-scan base-package="org.testapp.myapp.book" />
  -->    <context:component-scan base-package="user" />
  		<context:component-scan base-package="deview" />
+ 		<context:component-scan base-package="main"/>
     
     <!-- jsp <spring:message>사용 -->
     <beans:bean id ="messageSource"
@@ -119,6 +120,10 @@
    		</interceptor>
    		 <interceptor>
    			<mapping path="/user/changePw"/>
+   			<beans:bean class="interceptor.UserCheckInterceptor"/>
+   		</interceptor>
+   		 <interceptor>
+   			<mapping path="/deview/**"/>
    			<beans:bean class="interceptor.UserCheckInterceptor"/>
    		</interceptor>
    	</interceptors>

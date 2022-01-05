@@ -21,6 +21,7 @@
 				  <form:select path="devBigcate" class="form-select" id="inputGroupSelect01">
 				    <option value="C">C</option>
 				    <option value="C#">C#</option>
+				    <option value="C#">C++</option>
 				    <option value="JAVA">JAVA</option>
 				    <option value="PYTHON">PYTHON</option>
 				    <option value="KOTLIN">KOTLIN</option>

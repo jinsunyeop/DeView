@@ -12,7 +12,7 @@
 	</select>
 	
 	<select id="deviewAllList" resultType="deviewDto"> <!-- resultType은 result가 리스트로 반환되는데 리스트를 articleDto 객체로 반환된다는 뜻 -->
-		SELECT * FROM DEVIEW ORDER BY deview_id;
+		SELECT * FROM DEVIEW ORDER BY dev_id;
 	</select>
 	
 	<select id="countDeview" resultType="int"> 

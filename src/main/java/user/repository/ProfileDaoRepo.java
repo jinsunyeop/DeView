@@ -1,5 +1,7 @@
 package user.repository;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -37,6 +39,13 @@ public  class ProfileDaoRepo implements ProfileDao {
 	public int countProfile(int userId) {
 		
 		return sqlSessionTemplate.selectOne("countProfile",userId);
+	}
+
+
+	@Override
+	public List<ProfileDto> deviewJoinProfile() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("deviewJoinProfile");
 	}
 	
 	

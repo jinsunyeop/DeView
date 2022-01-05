@@ -11,6 +11,11 @@
 		SELECT * FROM PROFILE WHERE user_id=#{userId};
 	</select>
 	
+<!-- 	deview서비스를 하고 있는 프로필만 가지고 온다.-->
+	<select id="deviewJoinProfile" resultType="profileDto">
+		select p.* from deview d ,profile p where d.user_id=p.user_id;
+	</select>
+	
 	<select id="countProfile" parameterType="int" resultType="int">
 		SELECT count(*) FROM PROFILE WHERE user_id=#{userId};
 	</select>

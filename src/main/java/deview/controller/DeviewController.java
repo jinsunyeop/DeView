@@ -1,15 +1,18 @@
 package deview.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +22,7 @@ import deview.service.DeviewService;
 import user.dto.ProfileDto;
 import user.dto.UserDto;
 import user.service.ProfileService;
+import user.service.UserService;
 import validator.RegisterRequestValidator;
 
 @Controller
@@ -29,6 +33,9 @@ public class DeviewController {
 	
 	@Autowired
 	ProfileService profileService;
+	
+	@Autowired
+	UserService userService;
 	
 	@RequestMapping(value="/deview/start",method=RequestMethod.GET)
 	public String profile(Model model,HttpSession session) {
@@ -64,5 +71,23 @@ public class DeviewController {
 		}
 		
 	}
+	
+	@RequestMapping(value="/deview/read/{userId}",method=RequestMethod.GET)
+	public String read(Model model,@PathVariable int userId) {
+		
+		DeviewDto deview=deviewService.selectDeview(userId);
+		ProfileDto profile = profileService.selectProfile(userId);
+		UserDto user = userService.selectId(userId);
+		model.addAttribute("user",user);
+		model.addAttribute("deview",deview);
+		model.addAttribute("profile",profile);
+
+		
+		
+		return "/deview/read";
+	}
+	
+	
+	
 
 }

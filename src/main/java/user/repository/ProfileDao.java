@@ -1,5 +1,7 @@
 package user.repository;
 
+import java.util.List;
+
 import user.dto.ProfileDto;
 
 public interface ProfileDao {
@@ -7,6 +9,6 @@ public interface ProfileDao {
 	public abstract int countProfile(int userId);
 	public abstract void insertProfile(ProfileDto profile); //프로필 정보를 저장하는 메서드
 	public abstract int updateProfile(ProfileDto profile); //프로필 정보를 수정하는 메서드
-	
+	public abstract List<ProfileDto> deviewJoinProfile();
 
 }
