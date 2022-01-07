@@ -87,7 +87,10 @@
 			    </tr>
 
 			    <tr>
-			      <td colspan="6" class="text-right">수정 , 삭제</td>
+			      <td colspan="6" class="text-right">
+			        <a href="<c:url value='/deview/edit'/>"><img src="../resources/logo/edit.png" width="20" height="20" alt="edit" class="mx-2"></a>
+			      	<a onclick="popup2(this)" id="delete"><img src="../resources/logo/delete2.png" width="20" height="20" alt="update" class="mx-2"></a>
+			      </td>
 			    </tr>
 			  </tbody>
 			</table>
@@ -104,19 +107,28 @@
 
 <script>
 function popup(url){
-	var pop = $(url).attr("id");
+	var pop = "/profile/"+$(url).attr("id");
 	var ctx = getContextPath();
 	  function getContextPath() {
 	  return sessionStorage.getItem("contextpath");
 	}
 	  var name = "popup";
-	  var url = ctx+"/profile/"+pop;
-	  
-	window.open(url,name,"width=500,height=500,toolbar=no,status=no,location=no,scrollbars=yes,menubar=no,resizable=yes,left=50,right=50");
-	
+	  var url = ctx+pop;  
+	window.open(url,name,"width=500,height=500,toolbar=no,status=no,location=no,scrollbars=yes,menubar=no,resizable=yes,left=50,right=50");	
 }
 </script>
-
+<script>
+function popup2(url){
+	var pop = "/deview/"+$(url).attr("id");
+	var ctx = getContextPath();
+	  function getContextPath() {
+	  return sessionStorage.getItem("contextpath");
+	}
+	  var name = "popup";
+	  var url = ctx+pop;  
+	window.open(url,name,"width=700,height=500,toolbar=no,status=no,location=no,scrollbars=yes,menubar=no,resizable=yes,left=70,right=70");	
+}
+</script>
 
 
 

@@ -36,8 +36,29 @@
 		  <h4 class="text-muted">${user.userName}</h4>
 		</div>
 		 <hr>
-		
+		<ul class="list-group list-group-flush px-4 pt-3">
+		  <li class="list-group-item">
+		   	<img src="${pageContext.request.contextPath}/resources/logo/logo1.png" width="30" height="30" alt="gender" class="rounded-circle mx-2 " onerror="this.src='${pageContext.request.contextPath}/resources/logo/default.png'" >
+		 	저의 성별은 ${user.userGender } 입니다! 
+		  </li>
+		  <li class="list-group-item">
+		   	<img src="${pageContext.request.contextPath}/resources/logo/logo4.png" width="30" height="30" alt="email" class="rounded-circle mx-2 " onerror="this.src='${pageContext.request.contextPath}/resources/logo/default.png'" >
+		 	저의 이메일은 ${user.userEmail } 이구요.
+		  </li>	
+		  <li class="list-group-item">
+		   	<img src="${pageContext.request.contextPath}/resources/logo/launage.png" width="30" height="30" alt="launage" class="rounded-circle mx-2 " onerror="this.src='${pageContext.request.contextPath}/resources/logo/default.png'" >
+		 	저의 개발언어는 주로 ${deview.devBigcate } 사용하고 있습니다! 
+		  </li>			
+		  <li class="list-group-item">
+		   	<img src="${pageContext.request.contextPath}/resources/logo/programing.png" width="30" height="30" alt="programing" class="rounded-circle mx-2 " onerror="this.src='${pageContext.request.contextPath}/resources/logo/default.png'" >
+		 	 제가 리뷰하고자 하는 직무는 ${deview.devSmallcate } 사용하고 있습니다! 
+		  </li>			
+		</ul>
+		 <hr>
+		<div class="px-5 pt-3">
+		  <h4 class="text-muted">${deview.devContent}</h4>
 		</div>
+		
     </div>
 </div>
 

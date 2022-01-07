@@ -40,6 +40,18 @@ public class DeviewDaoRepo implements DeviewDao {
 	}
 
 
+	@Override
+	public void updateDeview(DeviewDto Deview) {
+		sqlSessionTemplate.insert("updateDeview",Deview);		
+	}
+
+
+	@Override
+	public void deleteDeview(int devId) {
+		sqlSessionTemplate.insert("deleteDeview",devId);		
+	}
+
+
 
 
 }

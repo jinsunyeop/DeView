@@ -26,5 +26,16 @@
 				SELECT IFNULL(MAX(ID),0)+1 FROM member  oracle사용 경우 SELECT NVL(MAX(id),0) FROM member
 			</selectKey>   -->
 	</insert>
+		
+	<update id="updateDeview" parameterType="deviewDto">
+		UPDATE DEVIEW SET dev_title=#{devTitle},dev_bigcate=#{devBigcate},
+		dev_smallcate=#{devSmallcate},dev_content=#{devContent},dev_number=#{devNumber},dev_price=#{devPrice} WHERE user_id=#{userId};
+	</update>
+	
+	<delete id="deleteDeview" parameterType="int">
+		DELETE FROM DEVIEW WHERE dev_id=#{dev_id};
+	</delete>
+	
+	
 
 </mapper>

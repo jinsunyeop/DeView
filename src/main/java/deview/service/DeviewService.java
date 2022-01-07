@@ -30,6 +30,13 @@ public class DeviewService {
 		 deviewDao.insertDeview(deview);
 	}
 	
+	public void updateDeview(DeviewDto deview) {
+		 deviewDao.updateDeview(deview);
+	}
+	
+	public void deleteDeview(int userId) {
+		 deviewDao.deleteDeview(userId);
+	}
 	
 	
 	

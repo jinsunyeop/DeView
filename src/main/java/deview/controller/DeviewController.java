@@ -51,8 +51,6 @@ public class DeviewController {
 
 			return "/deview/start";
 		}
-
-
 	}
 	
 	@RequestMapping(value="/deview/start",method=RequestMethod.POST)
@@ -87,7 +85,50 @@ public class DeviewController {
 		return "/deview/read";
 	}
 	
+	@RequestMapping(value="/deview/edit",method=RequestMethod.GET)
+	public String edit(Model model,HttpSession session) {
+		UserDto user = (UserDto)session.getAttribute("user");
+		ProfileDto profile = profileService.selectProfile(user.getUserId());
+		DeviewDto deview = deviewService.selectDeview(user.getUserId());
+		
+			model.addAttribute("user",user);
+			model.addAttribute("profile",profile);
+			model.addAttribute("command",deview);
+
+			return "/deview/edit";
+	}
 	
 	
+	@RequestMapping(value="/deview/edit",method=RequestMethod.POST)
+	public String edit(@ModelAttribute("command") @Valid DeviewDto deview,BindingResult bindingResult,Errors error) {
+		
+		if(bindingResult.hasErrors()) {
+			return"/deview/edit";
+		}
+		
+		try {
+			deviewService.updateDeview(deview);
+			return "redirect:/profile/profile";
+		}catch(NumberFormatException e) {
+			error.rejectValue("devPrice", "required");
+			return "/deview/edit";
+		}
+	}
+	
+	@RequestMapping(value="/deview/delete",method=RequestMethod.GET)
+	public String delete(Model model,HttpSession session) {
+		UserDto user = (UserDto)session.getAttribute("user");
+		DeviewDto deviewDto = deviewService.selectDeview(user.getUserId());
+			model.addAttribute("deview",deviewDto);
+
+			return "/deview/delete";
+	}
+	
+	@RequestMapping(value="/deview/delete",method=RequestMethod.POST)
+	public String delete(@RequestParam("devId") int devId) {
+		deviewService.deleteDeview(devId);
+
+			return "redirect:/profile/profile";
+	}	
 
 }
