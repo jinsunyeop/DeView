@@ -51,12 +51,12 @@
 			   </nav>			
 		</nav>
 		<nav class="navbar navbar-light bg-light p-2">
-				      <a class="nav-item nav-link active" style="margin-left:3rem;" href="<c:url value="/main/main"/>">C언어</a>
-				      <a class="nav-item nav-link active" style="margin-left:3rem;" href="<c:url value="/main/main"/>">C#</a>
-				      <a class="nav-item nav-link active" style="margin-left:3rem;" href="<c:url value="/main/main"/>">C++</a>
-				      <a class="nav-item nav-link active" style="margin-left:3rem;" href="<c:url value="/main/main"/>">JAVA</a>
-				      <a class="nav-item nav-link active" style="margin-left:3rem;" href="<c:url value="/main/main"/>">PYTHON</a>
-				      <a class="nav-item nav-link active" style="margin-left:3rem;" href="<c:url value="/main/main"/>">KOTLIN</a>
+				      <a class="nav-item nav-link active" style="margin-left:3rem;" href="<c:url value="/list/list?lang=1"/>">C언어</a>
+				      <a class="nav-item nav-link active" style="margin-left:3rem;" href="<c:url value="/list/list?lang=2"/>">C#</a>
+				      <a class="nav-item nav-link active" style="margin-left:3rem;" href="<c:url value="/list/list?lang=3"/>">C++</a>
+				      <a class="nav-item nav-link active" style="margin-left:3rem;" href="<c:url value="/list/list?lang=4"/>">JAVA</a>
+				      <a class="nav-item nav-link active" style="margin-left:3rem;" href="<c:url value="/list/list?lang=5"/>">PYTHON</a>
+				      <a class="nav-item nav-link active" style="margin-left:3rem;" href="<c:url value="/list/list?lang=6"/>">KOTLIN</a>
 			     
 		   <form class="form-inline">
 		    <select class="custom-select" style="width:100px;"> 
@@ -68,5 +68,13 @@
 		    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 		   </form>
 		</nav>      
-		
+<script>
+function replace(inum) { 
+	   // 정규식을 이용한 문자 변경 
+	   inum = inum.replace(/&/g, "%26"); 
+	   inum = inum.replace(/\+/g, "%2B"); 
+	   return inum; 
+	} 
+
+</script>
 	</header>

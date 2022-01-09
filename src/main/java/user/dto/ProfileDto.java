@@ -7,7 +7,7 @@ import org.hibernate.validator.constraints.Length;
 public class ProfileDto {
 	private int profileId;
 	private int userId;
-	@Length(min=2,max=20,message="주소는 2자 이상, 20자 미만 입력해야합니다.")
+	@Length(min=2,max=30,message="깃 주소는 2자 이상, 30자 미만 입력해야합니다.")
 	private String profileGit;
 	@Length(min=2,max=10,message="닉네임은 2자 이상, 10자 미만 입력해야합니다.")
 	private String profileNick;

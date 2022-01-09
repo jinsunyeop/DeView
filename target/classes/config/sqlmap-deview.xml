@@ -15,6 +15,11 @@
 		SELECT * FROM DEVIEW ORDER BY dev_id;
 	</select>
 	
+	<select id="pagingDeviewList" parameterType="hashMap" resultType="deviewDto"> 
+			SELECT @ROWNUM:=@ROWNUM+1 as ROWNUM, d.* from DEVIEW d,(select @ROWNUM := 0) TMP 
+			 ORDER BY dev_id DESC LIMIT #{start},#{count};  
+	</select>
+	
 	<select id="countDeview" resultType="int"> 
    		 SELECT COUNT(*) FROM DEVIEW;
 	</select>
@@ -36,6 +41,10 @@
 		DELETE FROM DEVIEW WHERE dev_id=#{dev_id};
 	</delete>
 	
+	
+	<select id="deviewBigcate" parameterType="String" resultType="deviewDto">
+		SELECT * FROM DEVIEW WHERE dev_bigcate=#{devBigcate}; 
+	</select>
 	
 
 </mapper>

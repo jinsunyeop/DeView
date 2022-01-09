@@ -12,5 +12,8 @@ public interface DeviewDao {
 	public abstract void insertDeview(DeviewDto Deview); //DEVIEW 정보를 저장하는 메서드
 	public abstract void updateDeview(DeviewDto Deview); //DEVIEW 정보를 수정하는 메서드
 	public abstract void deleteDeview(int devId); //DEVIEW 정보를 수정하는 메서드
+	public abstract List<DeviewDto> pagingDeviewList(int start,int count); //count 만큼 LIST 불러오는 메서드
+	public abstract List<DeviewDto> deviewBigcate(String devBigcate); //count 만큼 LIST 불러오는 메서드
 
+	
 }

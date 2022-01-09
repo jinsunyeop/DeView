@@ -1,5 +1,6 @@
 package deview.repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -49,6 +50,21 @@ public class DeviewDaoRepo implements DeviewDao {
 	@Override
 	public void deleteDeview(int devId) {
 		sqlSessionTemplate.insert("deleteDeview",devId);		
+	}
+
+
+	@Override
+	public List<DeviewDto> pagingDeviewList(int start, int count) {
+		HashMap<String,Integer> map = new HashMap<String,Integer>();
+		map.put("start", start);
+		map.put("count", count);
+		return sqlSessionTemplate.selectList("pagingDeviewList",map);
+	}
+
+
+	@Override
+	public List<DeviewDto> deviewBigcate(String devBigcate) {
+		return sqlSessionTemplate.selectList("deviewBigcate",devBigcate);
 	}
 
 

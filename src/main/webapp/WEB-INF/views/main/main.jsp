@@ -15,25 +15,27 @@
   <!-- The slideshow/carousel -->
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="https://picsum.photos/1200/300" alt="배너1" class="d-block w-100">
+      <img src="<c:url value='../resources/logo/배너1.png'/>" alt="배너1" class="d-block w-100">
     </div>
     <div class="carousel-item">
-      <img src="https://picsum.photos/1210/300" alt="배너2" class="d-block w-100">
+      <img src="<c:url value='../resources/logo/배너2.png'/>" alt="배너2" class="d-block w-100">
     </div>
     <div class="carousel-item">
-      <img src="https://picsum.photos/1220/300" alt="배너3" class="d-block w-100">
+      <img src="<c:url value='../resources/logo/배너3.png'/>" alt="배너3" class="d-block w-100">
     </div>
   </div>
   
 </div>
 
 <!-- 카드형 리스트 -->
-
+<c:if test=	"${deviewList.size()==0}"	> 
+<h1>DEVIEW가 없습니다</h1>
+</c:if>
 <div class="row m-5" style="text-align:center;">
 	<c:forEach var="deview" items="${deviewList}" varStatus="Loop">
 		 <c:forEach var="profile" items="${profileList}" varStatus="Loop">
 			<c:if test=	"${deview.userId==profile.userId}"	> 
-			  <div class="col-sm-5 col-md-3 border border-2 mx-auto">
+			  <div class="col-sm-5 col-md-3 border border-2 mx-5 mt-5">
 			    <div class="thumbnail mx-auto">
 				<img src="<c:url value='../resources/image/${profile.profileImg}'/>" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
 			      <div class="caption">
@@ -44,35 +46,30 @@
 			      </div>
 			    </div>
 			  </div>
-< 		  </c:if>  
+ 		  </c:if>  
 	  </c:forEach> 
     </c:forEach>
-<%--   <div class="col-sm-6 col-md-3 border border-2 mx-auto">
-    <div class="thumbnail mx-auto">
-	<img src="<c:url value='../resources/image/${profile.profileImg}'/>" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
-      <div class="caption">
-        <h3>Thumbnail label</h3>
-        <p>나는 가끔씩 이를테면 계절같은것에 취해 나를 속이며</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-sm-5 col-md-3 border border-2 mx-auto">
-    <div class="thumbnail mx-auto">
-	<img src="<c:url value='../resources/image/${profile.profileImg}'/>" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
-      <div class="caption">
-        <h3>Thumbnail label</h3>
-        <p>나는 가끔씩 이를테면 계절같은것에 취해 나를 속이며</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      </div>
-    </div>
-  </div>
-   --%>
-
+    
+      <nav aria-label="Page navigation example">
+	  <ul class="pagination nav justify-content-center mt-5">
+	    <li class="page-item">
+	      <a class="page-link" href="<c:url value="/main/main?page=${1}"/>" aria-label="Previous">
+	        <span aria-hidden="true">&laquo;</span>
+	      </a>
+	    </li>
+	    <c:forEach var = "i" begin="1" end="${allPage}">
+	    <li class="page-item"><a class="page-link" href="<c:url value="/main/main?page=${i}"/>">${i}</a></li>
+	    </c:forEach>
+	    <li class="page-item">
+	      <a class="page-link" href="<c:url value="/main/main?page=${allPage}"/>" aria-label="Next">
+	        <span aria-hidden="true">&raquo;</span>
+	      </a>
+	    </li>
+	  </ul>
+	</nav>
   
 </div>   
-  
+
     
  
 <%@ include file="/resources/layout/footer.jsp"%>

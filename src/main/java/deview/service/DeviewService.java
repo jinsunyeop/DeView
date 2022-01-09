@@ -22,6 +22,15 @@ public class DeviewService {
 		return deviewDao.deviewAllList();
 	}
 	
+	public List<DeviewDto> pagingDeviewList(int start,int count) {  //페이징 리스트 조회
+		return deviewDao.pagingDeviewList(start,count);
+	}
+	
+	public List<DeviewDto> deviewBigcate(String devBigcate) {  //전체 조회
+		return deviewDao.deviewBigcate(devBigcate);
+	}
+	
+	
 	public int countDeview () {  //갯수
 		return deviewDao.countDeview();
 	}

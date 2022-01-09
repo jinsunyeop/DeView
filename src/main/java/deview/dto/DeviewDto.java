@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class DeviewDto {
 	private int devId;
 	private int userId;
-    @Size(min = 2, max = 15,message="제목은 15자리까지 가능합니다.")
+    @Size(min = 2, max = 20,message="제목은 20자리까지 가능합니다.")
 	@NotEmpty
 	private String devTitle; //제목
 	@NotEmpty

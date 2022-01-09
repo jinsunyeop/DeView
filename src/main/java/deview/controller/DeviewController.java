@@ -42,7 +42,7 @@ public class DeviewController {
 		UserDto user = (UserDto)session.getAttribute("user");
 		ProfileDto profile = profileService.selectProfile(user.getUserId());
 		
-		if(deviewService.selectDeview(user.getUserId())!=null){
+		if(deviewService.selectDeview(user.getUserId())!=null){ //프로필과 데뷰 서비스 1 대 1
 			return "redirect:/profile/profile";
 		}else {
 			model.addAttribute("user",user);

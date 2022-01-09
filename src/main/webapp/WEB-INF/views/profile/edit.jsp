@@ -22,9 +22,16 @@
 					<form:label path="profileNick" class="form-label">NickName</form:label> <form:errors path="profileNick"/>
 					<form:input path="profileNick" class="form-control" placeholder="${profile.profileNick}"/>	
 			</div>
-			 <div class="mb-3 mt-3">
-					<form:label path="profileJob" class="form-label">JOB</form:label> 
-					<form:input path="profileJob" class="form-control" placeholder="${profile.profileJob}"/>	
+			<span>JOB</span>
+			<div class="input-group mb-3 mt-3">
+				  <form:select path="profileJob" class="form-select" id="inputGroupSelect01">
+				    <option value="무직">무직</option>
+				    <option value="대학생">대학생</option>
+				    <option value="대학원생">대학원생</option>
+				    <option value="개발자">개발자</option>
+				    <option value="다른 직무자">다른 직무자</option>
+				    <option value="CEO">CEO</option>
+				  </form:select>
 			</div>
 			<button type="submit" class="btn btn-outline-secondary">설정</button> 
 		</form:form>	
