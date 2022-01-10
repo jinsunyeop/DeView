@@ -46,5 +46,18 @@
 		SELECT * FROM DEVIEW WHERE dev_bigcate=#{devBigcate}; 
 	</select>
 	
+	<select id="deviewSearch1" parameterType="String" resultType="deviewDto">
+		SELECT * FROM DEVIEW WHERE dev_title LIKE CONCAT('%',#{devTitle},'%')
+	</select>
+	
+	<select id="deviewSearch2" parameterType="String" resultType="deviewDto">
+		SELECT d.* from  PROFILE p ,DEVIEW d where p.profile_nick LIKE CONCAT('%',#{profileNick},'%') and d.user_id=p.user_id;
+	</select>
+	
+	<select id="deviewSearch3" parameterType="HashMap" resultType="deviewDto">
+		SELECT d.* from  PROFILE p ,DEVIEW d where ( p.profile_nick LIKE CONCAT('%',#{profileNick},'%') or  d.dev_title LIKE CONCAT('%',#{devTitle},'%')) and d.user_id=p.user_id;
+	</select>
+	
+	
 
 </mapper>

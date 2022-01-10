@@ -1,10 +1,11 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="/resources/layout/header.jsp"%>
 <body>
-<c:if test=	"${deviewList.size()==0}"	> 
-<h1>DEVIEW가 없습니다</h1>
-</c:if>
+
 <div class="row m-5" style="text-align:center;">
+	<c:if test=	"${deviewList.size()==0}"	> 
+	<h1>DEVIEW가 없습니다</h1>
+	</c:if>
 	<c:forEach var="deview" items="${deviewList}" varStatus="Loop">
 		 <c:forEach var="profile" items="${profileList}" varStatus="Loop">
 			<c:if test=	"${deview.userId==profile.userId}"	> 

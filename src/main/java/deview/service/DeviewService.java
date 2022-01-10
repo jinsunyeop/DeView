@@ -47,6 +47,16 @@ public class DeviewService {
 		 deviewDao.deleteDeview(userId);
 	}
 	
+	public List<DeviewDto> deviewSearch1(String devTitle){
+		return deviewDao.deviewSearch1(devTitle);
+	}
+
+	public List<DeviewDto> deviewSearch2(String profileNick){
+		return deviewDao.deviewSearch2(profileNick);
+	}
 	
+	public List<DeviewDto> deviewSearch3(String all){
+		return deviewDao.deviewSearch3(all);
+	}
 	
 }

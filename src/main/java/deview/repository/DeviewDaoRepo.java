@@ -68,6 +68,28 @@ public class DeviewDaoRepo implements DeviewDao {
 	}
 
 
+	@Override
+	public List<DeviewDto> deviewSearch1(String devTitle) {
+		return sqlSessionTemplate.selectList("deviewSearch1",devTitle);
+	}
+
+
+	@Override
+	public List<DeviewDto> deviewSearch2(String profileNick) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectList("deviewSearch2",profileNick);
+	}
+
+
+	@Override
+	public List<DeviewDto> deviewSearch3(String all) {
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("devTitle", all);
+		map.put("profileNick", all);	
+		return sqlSessionTemplate.selectList("deviewSearch3",map);
+	}
+
+
 
 
 }

@@ -58,23 +58,15 @@
 				      <a class="nav-item nav-link active" style="margin-left:3rem;" href="<c:url value="/list/list?lang=5"/>">PYTHON</a>
 				      <a class="nav-item nav-link active" style="margin-left:3rem;" href="<c:url value="/list/list?lang=6"/>">KOTLIN</a>
 			     
-		   <form class="form-inline">
-		    <select class="custom-select" style="width:100px;"> 
-				  <option selected>선택</option>
+		   <form class="form-inline" action="<c:url value="/main/search"/>" method="get">
+		    <select class="custom-select" style="width:100px;" name="keyword"> 
+				  <option selected>Title/Viewer</option>
 				  <option value="1">Title</option>
 				  <option value="2">Viewer</option>
 			</select>
-		    <input class="mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+		    <input class="mr-sm-2" type="search" name ="search" placeholder="Search" aria-label="Search">
 		    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 		   </form>
 		</nav>      
-<script>
-function replace(inum) { 
-	   // 정규식을 이용한 문자 변경 
-	   inum = inum.replace(/&/g, "%26"); 
-	   inum = inum.replace(/\+/g, "%2B"); 
-	   return inum; 
-	} 
 
-</script>
 	</header>
