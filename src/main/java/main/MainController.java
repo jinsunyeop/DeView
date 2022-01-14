@@ -51,7 +51,7 @@ public class MainController {
 	
 	
 	
-	@RequestMapping(value= {"/main/main"},method=RequestMethod.GET)
+	@RequestMapping(value= {"/main","/"},method=RequestMethod.GET)
 	public String main(Model model,HttpServletRequest req) {
 		
 		String page = req.getParameter("page"); //페이지 파라미터

@@ -73,7 +73,6 @@
 			      <th>주요 언어</th>
 			      <th>주요 기술</th>
 			      <th>전화 번호</th>
-			      <th>가격</th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -83,13 +82,12 @@
 			      	<td>${deview.devBigcate}</td>
 			      	<td>${deview.devSmallcate}</td>
 			      	<td>${deview.devNumber}</td>
-			      	<td>${deview.devPrice} 원</td>
 			    </tr>
 
 			    <tr>
 			      <td colspan="6" class="text-right">
-			        <a href="<c:url value='/deview/edit'/>"><img src="../resources/logo/edit.png" width="20" height="20" alt="edit" class="mx-2"></a>
-			      	<a onclick="popup2(this)" id="delete"><img src="../resources/logo/delete2.png" width="20" height="20" alt="update" class="mx-2"></a>
+			        <a href="<c:url value='/deview/edit'/>"><img src="../resources/logo/edit3.png" width="20" height="20" alt="edit" class="mx-2"></a>
+			      	<a onclick="popup2(this)" id="delete"><img src="../resources/logo/delete3.png" width="20" height="20" alt="update" class="mx-2"></a>
 			      </td>
 			    </tr>
 			  </tbody>
@@ -99,10 +97,82 @@
 				<hr>
 		</div>
 		
-		
-		
-		
-	
+		<div class="mt-4">
+				<h2 class="font-weight-bold"><strong>나의 DeView에 요청을 준 유저 </strong></h2>
+				<div class="row m-5" style="text-align:center;" >
+	 				<c:if test="${not empty profileList1}">
+					<c:forEach var="profile" items="${profileList1}" varStatus="Loop">
+					  <div class="col-sm-5 col-md-3 border border-2 mx-5 mt-5">
+					    <div class="thumbnail mx-auto">
+					    <span>${profile.profileNick}님으로부터 요청을 받았습니다.</span>
+						<img src="${pageContext.request.contextPath}/resources/image/${profile.profileImg}" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
+					      <div class="caption" style="text-align:left;">
+					      	<img src="${pageContext.request.contextPath}/resources/logo/git2.png" width="20" height="20" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >${profile.profileGit}<br>
+					      	<img src="${pageContext.request.contextPath}/resources/logo/job2.png" width="20" height="20" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >${profile.profileJob}
+					      </div>
+						        <form class="d-grid gap-2 col-6 mx-auto" action="<c:url value="/matching/update"/>" method="get">
+						       		  <input type="hidden" name="request" value="${profile.userId}">
+						       		 <button type="submit" class="btn btn-outline-primary " role="button">승인</button>
+					    		</form>
+						         <form class="d-grid gap-2 col-6 mx-auto" action="<c:url value="/matching/delete"/>" method="get">
+						       		  <input type="hidden" name="request" value="${profile.userId}">
+						     		   <button type="submit" class="btn btn-outline-warning " role="button">취소</button>
+					    		</form>
+					    </div>
+					  </div>
+					</c:forEach>
+					</c:if>
+				   <c:if test="${empty profileList1}">
+			 			<h5>현재 요청을 준 USER가 존재하지 않습니다.</h5>
+				   </c:if>
+			</div>
+			<hr>
+			
+			<h2 class="font-weight-bold"><strong>내가 요청한 DeViewer</strong> </h2>
+			<div class="row m-5" style="text-align:center;">
+ 			<c:if test="${not empty profileList2}">
+				<c:forEach var="profile" items="${profileList2}" varStatus="Loop">
+				  <div class="col-sm-5 col-md-3 border border-2 mx-5 mt-5">
+				    <div class="thumbnail mx-auto">
+				    <span>${profile.profileNick}님께 요청을 했습니다.</span>
+					<img src="${pageContext.request.contextPath}/resources/image/${profile.profileImg}" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
+				      <div class="caption">
+				      	<span>${profile.profileNick}</span>
+				        <p><a href="<c:url value='/deview/read/${profile.userId}'/>"class="btn btn-primary" role="button">보러가기</a></p>
+				      </div>
+				    </div>
+				  </div>
+				</c:forEach>
+			</c:if>
+			 <c:if test="${empty profileList2}">
+			 		<h5>현재 요청한 DeViewer가 존재하지 않습니다.</h5>
+			</c:if>
+			</div>
+			<hr>
+			
+<%-- 			<h2 class="font-weight-bold"><strong>매칭 완료된 DeViewer</strong> </h2>
+			<div class="row m-5" style="text-align:center;">
+ 			<c:if test="${not empty profileList2}">
+				<c:forEach var="profile" items="${profileList2}" varStatus="Loop">
+				  <div class="col-sm-5 col-md-3 border border-2 mx-5 mt-5">
+				    <div class="thumbnail mx-auto">
+				    <span>${profile.profileNick}님께 요청을 했습니다.</span>
+					<img src="${pageContext.request.contextPath}/resources/image/${profile.profileImg}" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
+				      <div class="caption">
+				      	<span>${profile.profileNick}</span>
+				        <p><a href="<c:url value='/deview/read/${profile.userId}'/>"class="btn btn-primary" role="button">보러가기</a></p>
+				      </div>
+				    </div>
+				  </div>
+				</c:forEach>
+			</c:if>
+			 <c:if test="${empty profileList3}">
+			 		<h5>현재 요청한 매칭된 DeViewer가 존재하지 않습니다.</h5>
+			</c:if>
+			</div>
+			<hr> --%>
+			
+				
 	</div>
 
 <script>

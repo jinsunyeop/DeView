@@ -15,13 +15,13 @@
   <!-- The slideshow/carousel -->
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="<c:url value='../resources/logo/배너1.png'/>" alt="배너1" class="d-block w-100">
+      <img src="${pageContext.request.contextPath}/resources/logo/배너1.png" alt="배너1" class="d-block w-100">
     </div>
     <div class="carousel-item">
-      <img src="<c:url value='../resources/logo/배너2.png'/>" alt="배너2" class="d-block w-100">
+      <img src="${pageContext.request.contextPath}/resources/logo/배너2.png" alt="배너2" class="d-block w-100">
     </div>
     <div class="carousel-item">
-      <img src="<c:url value='../resources/logo/배너3.png'/>" alt="배너3" class="d-block w-100">
+      <img src="${pageContext.request.contextPath}/resources/logo/배너3.png" alt="배너3" class="d-block w-100">
     </div>
   </div>
   
@@ -37,7 +37,7 @@
 			<c:if test=	"${deview.userId==profile.userId}"	> 
 			  <div class="col-sm-5 col-md-3 border border-2 mx-5 mt-5">
 			    <div class="thumbnail mx-auto">
-				<img src="<c:url value='../resources/image/${profile.profileImg}'/>" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
+				<img src="${pageContext.request.contextPath}/resources/image/${profile.profileImg}" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
 			      <div class="caption">
 			      	<span>${profile.profileNick}</span>
 			        <h3>${deview.devTitle}</h3>
@@ -53,15 +53,15 @@
       <nav aria-label="Page navigation example">
 	  <ul class="pagination nav justify-content-center mt-5">
 	    <li class="page-item">
-	      <a class="page-link" href="<c:url value="/main/main?page=${1}"/>" aria-label="Previous">
+	      <a class="page-link" href="<c:url value="/main?page=${1}"/>" aria-label="Previous">
 	        <span aria-hidden="true">&laquo;</span>
 	      </a>
 	    </li>
 	    <c:forEach var = "i" begin="1" end="${allPage}">
-	    <li class="page-item"><a class="page-link" href="<c:url value="/main/main?page=${i}"/>">${i}</a></li>
+	    <li class="page-item"><a class="page-link" href="<c:url value="/main?page=${i}"/>">${i}</a></li>
 	    </c:forEach>
 	    <li class="page-item">
-	      <a class="page-link" href="<c:url value="/main/main?page=${allPage}"/>" aria-label="Next">
+	      <a class="page-link" href="<c:url value="/main?page=${allPage}"/>" aria-label="Next">
 	        <span aria-hidden="true">&raquo;</span>
 	      </a>
 	    </li>

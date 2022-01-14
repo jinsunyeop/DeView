@@ -30,7 +30,6 @@
 			      <th>주요 언어</th>
 			      <th>주요 기술</th>
 			      <th>전화 번호</th>
-			      <th>가격</th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -40,7 +39,6 @@
 			      	<td>${deview.devBigcate}</td>
 			      	<td>${deview.devSmallcate}</td>
 			      	<td>${deview.devNumber}</td>
-			      	<td>${deview.devPrice} 원</td>
 			    </tr>
 			      <td colspan="6" class="text-right">
 			    	<button type="submit" class="btn btn-outline-secondary">삭제</button> 

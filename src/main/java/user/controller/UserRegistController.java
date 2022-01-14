@@ -119,7 +119,7 @@ public class UserRegistController {
 		System.out.println(confirm.toString());
 		try {
 			userService.delete(confirm.getEmail(), confirm.isAgree(),confirm.getPassword());
-			return "redirect:/main/main";
+			return "redirect:/main";
 		}catch(PwNotMatchingException e) {
 			errors.reject("NotMatchPassword");
 			return "/user/deleteUser";

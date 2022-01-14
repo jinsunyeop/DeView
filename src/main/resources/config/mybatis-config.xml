@@ -13,7 +13,8 @@
 	<typeAliases>
 		<typeAlias alias="userDto" type="user.dto.UserDto"/> 	
 		<typeAlias alias="profileDto" type="user.dto.ProfileDto"/> 	
-				<typeAlias alias="deviewDto" type="deview.dto.DeviewDto"/> 	
+		<typeAlias alias="deviewDto" type="deview.dto.DeviewDto"/> 	
+		<typeAlias alias="matchingDto" type="matching.dto.MatchingDto"/> 	
 	</typeAliases> 
 
  </configuration>

@@ -50,12 +50,7 @@
 					<form:label path="devNumber" class="form-label">number</form:label><br><form:errors path="devNumber"/>
 	 				<form:input path="devNumber" class="form-control" placeholder="010-xxxx-xxxx"/>		
 			</div>
-			<form:label path="devPrice" class="form-label">price</form:label><br><form:errors path="devPrice"/>
-			<div class="input-group mb-3">
-			  <span class="input-group-text">$</span>
-			  <span class="input-group-text">0.00</span>
-			  <form:input path="devPrice" class="form-control"  placeholder="시간당 가격을 적어주세요!"/>
-			</div>
+
 			
 			<button type="submit" class="btn btn-outline-secondary">Start</button> 
 		</form:form>

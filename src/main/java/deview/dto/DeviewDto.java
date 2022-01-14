@@ -28,9 +28,7 @@ public class DeviewDto {
 	private String devNumber; //번호
 	private Date devDate; //개설 날짜
 	
-	@NotNull	
-	@Digits(integer = 7, fraction = 0,message="100만원 미만이며 소수점을 허용하지 않습니다.")
-	private int devPrice; //리뷰당 가격
+
 
 	public int getDevId() {
 		return devId;
@@ -96,13 +94,7 @@ public class DeviewDto {
 		this.devDate = devDate;
 	}
 
-	public int getDevPrice() {
-		return devPrice;
-	}
 
-	public void setDevPrice(int devPrice) {
-		this.devPrice = devPrice;
-	}
 	
 	
 	

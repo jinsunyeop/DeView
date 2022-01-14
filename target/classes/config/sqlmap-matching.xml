@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="matchingDao">
+ 
+ 	<select id="selectMatching" parameterType="HashMap" resultType="matchingDto">
+		SELECT * FROM MATCHING WHERE matching_request=#{request} and matching_apply=#{apply};
+	</select>
+ 
+ 	 <select id="selectRequest" parameterType="int" resultType="matchingDto">
+		SELECT * FROM MATCHING WHERE matching_request=#{request} and matching_status=0;
+	</select>
+ 
+  	 <select id="selectApply" parameterType="int" resultType="matchingDto">
+		SELECT * FROM MATCHING WHERE matching_apply=#{apply} and matching_status=0;
+	</select>
+ 
+ 
+ 	<insert id="requestMatching" parameterType="HashMap">
+		INSERT INTO MATCHING(matching_request,matching_apply)
+		VALUES (#{request},#{apply});
+	</insert>
+ 
+ 	<delete id="deleteMatching" parameterType="HashMap">
+		DELETE FROM MATCHING WHERE matching_request=#{request} AND matching_apply = #{apply};
+	</delete>
+ 
+ 	<update id="updateMatching" parameterType="HashMap">
+		UPDATE MATCHING SET matching_status=1 WHERE matching_request=#{request} AND matching_apply = #{apply};
+	</update>
+ 
+ 
+ 
+ </mapper>

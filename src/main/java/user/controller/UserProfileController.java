@@ -3,6 +3,8 @@ package user.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import deview.service.DeviewService;
+import matching.service.MatchingService;
 import user.dto.ProfileDto;
 import user.dto.UserDto;
 import user.service.ProfileService;
@@ -32,6 +35,8 @@ public class UserProfileController {
 	@Autowired
 	private DeviewService deviewService;
 
+	@Autowired
+	private MatchingService matchingService;
 
 	public void setProfileService(ProfileService profileService) {
 		this.profileService = profileService;
@@ -40,16 +45,64 @@ public class UserProfileController {
 	@RequestMapping(value="/profile/profile",method=RequestMethod.GET)
 	public String profile(Model model,HttpSession session) {
 		UserDto user = (UserDto)session.getAttribute("user");
+		List<ProfileDto> profileList1 =  new ArrayList<ProfileDto>();
+		List<ProfileDto> profileList2 =  new ArrayList<ProfileDto>();
+		
 		int uId=user.getUserId();
 		if(profileService.countProfile(uId)!=0) {
 			model.addAttribute("profile",profileService.selectProfile(uId));
 			if(deviewService.selectDeview(uId)!=null) {
 				model.addAttribute("deview",deviewService.selectDeview(uId));
 			}
+			if(matchingService.selectRequest(uId)!=null) { //내가 요청을 준 
+				for(int i=0; i<matchingService.selectRequest(uId).size(); i++) {
+					ProfileDto profile= profileService.selectProfile(Integer.parseInt(matchingService.selectRequest(uId).get(i).getMatchingApply()));
+					profileList2.add(profile);
+				}
+				model.addAttribute("profileList2",profileList2);
+			}
+			if(matchingService.selectApply(uId)!=null) { // 내가 요청을 받은
+				for(int i=0; i<matchingService.selectApply(uId).size(); i++) {
+					ProfileDto profile= profileService.selectProfile(Integer.parseInt(matchingService.selectApply(uId).get(i).getMatchingRequest()));
+					profileList1.add(profile);
+					System.out.println(profile.getProfileNick());
+				}
+				model.addAttribute("profileList1",profileList1);
+				
+			}
 		}
 		return "/profile/profile";
-
 	}
+	
+	
+	@RequestMapping(value="/matching/delete",method=RequestMethod.GET)
+	public String matchDelete(@RequestParam(value="request", required=false)String request,HttpSession session) { 	
+		UserDto user = (UserDto)session.getAttribute("user");
+		int applyId = user.getUserId();
+		int requestId = Integer.parseInt(request);
+		matchingService.deleteMatching(requestId, applyId);
+
+
+		return "redirect:/profile/profile";
+	}
+	
+	@RequestMapping(value="/matching/update",method=RequestMethod.GET)
+	public String matchUpdate(@RequestParam(value="request", required=false)String request,HttpSession session) { 	
+		UserDto user = (UserDto)session.getAttribute("user");
+		int applyId = user.getUserId();
+		int requestId = Integer.parseInt(request);
+		matchingService.updateMatching(requestId, applyId);
+		System.out.println(requestId);
+		System.out.println(applyId);
+
+		return "redirect:/profile/profile";
+	}
+
+	
+	
+	
+	
+	
 	
 	@RequestMapping(value="/profile/insert",method=RequestMethod.GET)
 	public String insert(Model model,HttpSession session) {

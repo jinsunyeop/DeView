@@ -10,24 +10,36 @@
                 <h3 class="text-center ">DeViewer 소개</h3>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0" id="menu">
                     <li class="nav-item text-center pb-3">
- 						<img src="<c:url value="${pageContext.request.contextPath}/resources/image/${profile.profileImg}"/>" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='${pageContext.request.contextPath}/resources/logo/default.png'" >
+ 						<img src="${pageContext.request.contextPath}/resources/image/${profile.profileImg}" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='${pageContext.request.contextPath}/resources/logo/default.png'" >
                     </li>
-                    <li class="nav-item px-3 pb-3">
-                    	<span> <img src="${pageContext.request.contextPath}/resources/logo/nick.png" width="20" height="20" alt="nick" class="mx-1" >${profile.profileNick}</span>
+                    <li class="nav-item px-1 pb-3">
+                    	<span> <img src="${pageContext.request.contextPath}/resources/logo/nick2.png" width="20" height="20" alt="nick" class="mx-1" >${profile.profileNick}</span>
                     </li>
-                    <li class="nav-item px-3 pb-3">
-                    	<span> <img src="${pageContext.request.contextPath}/resources/logo/git.png" width="20" height="20" alt="git" class="mx-1" >${profile.profileGit}</span>
+                    <li class="nav-item px-1 pb-3">
+                    	<span> <img src="${pageContext.request.contextPath}/resources/logo/git2.png" width="20" height="20" alt="git"  >${profile.profileGit}</span>
                     </li>
-                	 <li class="nav-item px-3 pb-3">
-                    	<span> <img src="${pageContext.request.contextPath}/resources/logo/job.png" width="20" height="20" alt="git" class="mx-1" >${profile.profileJob}</span>
+                	 <li class="nav-item px-1 pb-3">
+                    	<span> <img src="${pageContext.request.contextPath}/resources/logo/job2.png" width="20" height="20" alt="git" class="mx-1" >${profile.profileJob}</span>
                     </li>
+
                 </ul>
+                	  <div class="btn-group" role="group">
+                	  	<c:if test=	"${matchingStatus==null}">                       	  
+	                	  	<form:form commandName="matching" method="POST">
+		                		<input type="hidden" name ="matchingRequest" value="${myUserId}">
+		                        <input type="hidden" name ="matchingApply" value="${profile.userId}">
+							    <button type="submit" class="btn btn-primary">매칭하기</button>
+						    </form:form>
+					    </c:if>
+					    <c:if test=	"${matchingStatus==false}">                       	  
+					    	<h2>매칭중입니다!!</h2>
+					    </c:if>
+					    <c:if test=	"${matchingStatus==true}">                       	  
+					    	<h5>매칭 완료! 프로필로 가서 확인해주세요! </h5>
+					    </c:if>
+					    </div>
+			
                 <hr>
-                <div class="pb-4">
-                      <h4 class="pb-3">Price: ${deview.devPrice} 원</h4>
-                     <p><a href="<c:url value='/deview/read/${deview.userId}'/>"class="btn btn-primary" style="float:right;" role="button">결제하기</a></p>
-                    
-                </div>
             </div>
         </div>
         <div class="border border-5 col py-3 m-4 ">
@@ -53,6 +65,7 @@
 		   	<img src="${pageContext.request.contextPath}/resources/logo/programing.png" width="30" height="30" alt="programing" class="rounded-circle mx-2 " onerror="this.src='${pageContext.request.contextPath}/resources/logo/default.png'" >
 		 	 제가 리뷰하고자 하는 직무는 ${deview.devSmallcate } 사용하고 있습니다! 
 		  </li>			
+		  
 		</ul>
 		 <hr>
 		<div class="px-5 pt-3">

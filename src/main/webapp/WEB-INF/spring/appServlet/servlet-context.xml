@@ -49,6 +49,8 @@
  -->    <context:component-scan base-package="user" />
  		<context:component-scan base-package="deview" />
  		<context:component-scan base-package="main"/>
+ 		 <context:component-scan base-package="matching"/>
+ 		
     
     <!-- jsp <spring:message>사용 -->
     <beans:bean id ="messageSource"
@@ -82,6 +84,7 @@
    				<beans:value>classpath:config/sqlmap-user.xml</beans:value>
    				<beans:value>classpath:config/sqlmap-profile.xml</beans:value>
    				<beans:value>classpath:config/sqlmap-deview.xml</beans:value>
+      			<beans:value>classpath:config/sqlmap-matching.xml</beans:value>
    
    			</beans:list>
    		</beans:property>
@@ -104,6 +107,10 @@
    	<beans:bean id ="deviewDao" class="deview.repository.DeviewDaoRepo">
    		<beans:constructor-arg ref="sqlSessionTemplate"/>
    	</beans:bean> 
+   	
+<!--    	  <beans:bean id ="matchingDao" class="matching.repository.MatchingDaoRepo">
+   		<beans:constructor-arg ref="sqlSessionTemplate"/>
+   	</beans:bean>  -->
    	
 
    	<!-- 파일 업로드 -->

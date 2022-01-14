@@ -23,10 +23,10 @@
 </head>
 	<header>
 		 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
-			  <a class="navbar-brand m-3 " href="<c:url value="/main/main"/>">DeView</a>
+			  <a class="navbar-brand m-3 " href="<c:url value="/main"/>">DeView</a>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			    <div class="navbar-nav">
-				      <a class="nav-item nav-link active" href="<c:url value="/main/main"/>">Home</a>
+				      <a class="nav-item nav-link active" href="<c:url value="/main"/>">Home</a>
 			 	  	  <a class="nav-item nav-link text-light" href="<c:url value='/deview/start'/>">Start DeView</a>
 			    </div>
 		   </div>
