@@ -10,10 +10,12 @@ public interface MatchingDao {
 	public abstract List<MatchingDto> selectRequest(int request);
 	public abstract List<MatchingDto> selectApply(int apply);
 	public abstract void requestMatching(int request,int apply);
-	public abstract void deleteMatching(int request,int apply);
+	public abstract void matchingCancel(int request,int apply);
 	public abstract void updateMatching(int request,int apply);
+	public abstract List<MatchingDto> completeMatching1(int request);
+	public abstract List<MatchingDto> completeMatching2(int apply);
 
 	
-	
+
 
 }

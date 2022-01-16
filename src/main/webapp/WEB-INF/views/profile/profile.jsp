@@ -59,9 +59,9 @@
 		<c:choose>
 			<c:when test="${empty deview}">
 			<h2><strong>DeViewer 등록하기	</strong></h2>
-			<a href="<c:url value='/deview/start'/>">
-			<img src="<c:url value='../resources/logo/DeViewLogo.png'/>" width="200" height="100" alt="img"  onerror="this.src='../resources/logo/default.png'" >
-			</a>
+			<h3 style="text-align:center;"><a href="<c:url value='/deview/start'/>" style="text-decoration-line : none;">
+			DeView 시작하기
+			</a></h3>
 			</c:when>
 			<c:otherwise>
 			<h2><strong>등록한 DeViewer</strong></h2>
@@ -101,21 +101,21 @@
 				<h2 class="font-weight-bold"><strong>나의 DeView에 요청을 준 유저 </strong></h2>
 				<div class="row m-5" style="text-align:center;" >
 	 				<c:if test="${not empty profileList1}">
-					<c:forEach var="profile" items="${profileList1}" varStatus="Loop">
+					<c:forEach var="reqProfile" items="${profileList1}" varStatus="Loop">
 					  <div class="col-sm-5 col-md-3 border border-2 mx-5 mt-5">
 					    <div class="thumbnail mx-auto">
-					    <span>${profile.profileNick}님으로부터 요청을 받았습니다.</span>
-						<img src="${pageContext.request.contextPath}/resources/image/${profile.profileImg}" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
+					    <span>${reqProfile.profileNick}님으로부터 요청을 받았습니다.</span>
+						<img src="${pageContext.request.contextPath}/resources/image/${reqProfile.profileImg}" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
 					      <div class="caption" style="text-align:left;">
-					      	<img src="${pageContext.request.contextPath}/resources/logo/git2.png" width="20" height="20" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >${profile.profileGit}<br>
-					      	<img src="${pageContext.request.contextPath}/resources/logo/job2.png" width="20" height="20" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >${profile.profileJob}
+					      	<img src="${pageContext.request.contextPath}/resources/logo/git2.png" width="20" height="20" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >${reqProfile.profileGit}<br>
+					      	<img src="${pageContext.request.contextPath}/resources/logo/job2.png" width="20" height="20" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >${reqProfile.profileJob}
 					      </div>
 						        <form class="d-grid gap-2 col-6 mx-auto" action="<c:url value="/matching/update"/>" method="get">
-						       		  <input type="hidden" name="request" value="${profile.userId}">
+						       		  <input type="hidden" name="request" value="${reqProfile.userId}">
 						       		 <button type="submit" class="btn btn-outline-primary " role="button">승인</button>
 					    		</form>
 						         <form class="d-grid gap-2 col-6 mx-auto" action="<c:url value="/matching/delete"/>" method="get">
-						       		  <input type="hidden" name="request" value="${profile.userId}">
+						       		  <input type="hidden" name="request" value="${reqProfile.userId}">
 						     		   <button type="submit" class="btn btn-outline-warning " role="button">취소</button>
 					    		</form>
 					    </div>
@@ -131,14 +131,14 @@
 			<h2 class="font-weight-bold"><strong>내가 요청한 DeViewer</strong> </h2>
 			<div class="row m-5" style="text-align:center;">
  			<c:if test="${not empty profileList2}">
-				<c:forEach var="profile" items="${profileList2}" varStatus="Loop">
+				<c:forEach var="applyProfile" items="${profileList2}" varStatus="Loop">
 				  <div class="col-sm-5 col-md-3 border border-2 mx-5 mt-5">
 				    <div class="thumbnail mx-auto">
-				    <span>${profile.profileNick}님께 요청을 했습니다.</span>
-					<img src="${pageContext.request.contextPath}/resources/image/${profile.profileImg}" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
+				    <span>${applyProfile.profileNick}님께 요청을 했습니다.</span>
+					<img src="${pageContext.request.contextPath}/resources/image/${applyProfile.profileImg}" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
 				      <div class="caption">
-				      	<span>${profile.profileNick}</span>
-				        <p><a href="<c:url value='/deview/read/${profile.userId}'/>"class="btn btn-primary" role="button">보러가기</a></p>
+				      	<span>${applyProfile.profileNick}</span>
+				        <p><a href="<c:url value='/deview/read/${applyProfile.userId}'/>"class="btn btn-primary" role="button">보러가기</a></p>
 				      </div>
 				    </div>
 				  </div>
@@ -149,30 +149,49 @@
 			</c:if>
 			</div>
 			<hr>
-			
-<%-- 			<h2 class="font-weight-bold"><strong>매칭 완료된 DeViewer</strong> </h2>
+		
+			<h2 class="font-weight-bold"><strong>나의 DeView에 요청을 준 유저와 채팅 하러 가기</strong> </h2>
 			<div class="row m-5" style="text-align:center;">
- 			<c:if test="${not empty profileList2}">
-				<c:forEach var="profile" items="${profileList2}" varStatus="Loop">
+ 			<c:if test="${not empty completeList1}">
+				<c:forEach var="complete1" items="${completeList1}" varStatus="Loop">
 				  <div class="col-sm-5 col-md-3 border border-2 mx-5 mt-5">
 				    <div class="thumbnail mx-auto">
-				    <span>${profile.profileNick}님께 요청을 했습니다.</span>
-					<img src="${pageContext.request.contextPath}/resources/image/${profile.profileImg}" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
+					<img src="${pageContext.request.contextPath}/resources/image/${complete1.profileImg}" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
 				      <div class="caption">
-				      	<span>${profile.profileNick}</span>
-				        <p><a href="<c:url value='/deview/read/${profile.userId}'/>"class="btn btn-primary" role="button">보러가기</a></p>
+				      	<span>${complete1.profileNick}</span>
+				        <p><a id= "${complete1.userId}"class="btn btn-primary" onclick="popup3(this)" role="button">채팅창</a></p>
 				      </div>
 				    </div>
 				  </div>
 				</c:forEach>
 			</c:if>
-			 <c:if test="${empty profileList3}">
-			 		<h5>현재 요청한 매칭된 DeViewer가 존재하지 않습니다.</h5>
+			 <c:if test="${empty completeList1}">
+			 		<h5>현재 매칭된 채팅이 존재하지 않습니다.</h5>
 			</c:if>
 			</div>
-			<hr> --%>
+			<hr>
 			
-				
+			<h2 class="font-weight-bold"><strong>내가 요청한 DeViewer와 채팅 하러 가기</strong> </h2>
+			<div class="row m-5" style="text-align:center;">
+ 			<c:if test="${not empty completeList2}">
+				<c:forEach var="complete2" items="${completeList2}" varStatus="Loop">
+				  <div class="col-sm-5 col-md-3 border border-2 mx-5 mt-5">
+				    <div class="thumbnail mx-auto">
+					<img src="${pageContext.request.contextPath}/resources/image/${complete2.profileImg}" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
+				      <div class="caption">
+				      	<span>${complete2.profileNick}</span>
+				        <p><a id= "${complete2.userId}"class="btn btn-primary" onclick="popup4(this)" role="button">채팅창</a></p>
+				      </div>
+				    </div>
+				  </div>
+				</c:forEach>
+			</c:if>
+			 <c:if test="${empty completeList2}">
+			 		<h5>현재 매칭된 채팅이 존재하지 않습니다.</h5>
+			</c:if>
+			</div>
+			<hr>
+
 	</div>
 
 <script>
@@ -190,6 +209,32 @@ function popup(url){
 <script>
 function popup2(url){
 	var pop = "/deview/"+$(url).attr("id");
+	var ctx = getContextPath();
+	  function getContextPath() {
+	  return sessionStorage.getItem("contextpath");
+	}
+	  var name = "popup";
+	  var url = ctx+pop;  
+	window.open(url,name,"width=700,height=500,toolbar=no,status=no,location=no,scrollbars=yes,menubar=no,resizable=yes,left=70,right=70");	
+}
+</script>
+
+<script>
+function popup3(url){
+	var pop = "/matching/chatToId/"+$(url).attr("id");
+	var ctx = getContextPath();
+	  function getContextPath() {
+	  return sessionStorage.getItem("contextpath");
+	}
+	  var name = "popup";
+	  var url = ctx+pop;  
+	window.open(url,name,"width=700,height=500,toolbar=no,status=no,location=no,scrollbars=yes,menubar=no,resizable=yes,left=70,right=70");	
+}
+</script>
+
+<script>
+function popup4(url){
+	var pop = "/matching/chatToId/"+$(url).attr("id");
 	var ctx = getContextPath();
 	  function getContextPath() {
 	  return sessionStorage.getItem("contextpath");

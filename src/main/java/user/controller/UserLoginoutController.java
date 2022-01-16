@@ -31,7 +31,7 @@ public class UserLoginoutController {
 	
 	@RequestMapping(value={"/user/login","/login"},method=RequestMethod.GET)
 	public String login(Model model,@CookieValue(value="remember",required=false)Cookie cookie,HttpSession session) {
-		//만약 로그인이 되서 세션이 겟 됫으면 login을 요청해도 메인으로 가게
+
 		Object user = session.getAttribute("user");
 		if(user !=null) {
 			return "/main";
@@ -60,7 +60,6 @@ public class UserLoginoutController {
 												loginCommand.getPassword());
 			session.setAttribute("user", user);
 			
-//			쿠키 생성 방법 
 			Cookie rememberCookie = new Cookie("remember",loginCommand.getEmail());
 			rememberCookie.setPath("/");
 			if(loginCommand.isRememberEmail()) {

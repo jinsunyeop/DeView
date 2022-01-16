@@ -23,11 +23,13 @@
 </head>
 	<header>
 		 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
-			  <a class="navbar-brand m-3 " href="<c:url value="/main"/>">DeView</a>
+			  <a class="navbar-brand m-3 " href="<c:url value="/main"/>">
+			  	<img src="${pageContext.request.contextPath}/resources/logo/DeviewLogo.png" width="200" height="100" alt="메인로고"  class="mx-2">
+			  </a>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 			    <div class="navbar-nav">
-				      <a class="nav-item nav-link active" href="<c:url value="/main"/>">Home</a>
-			 	  	  <a class="nav-item nav-link text-light" href="<c:url value='/deview/start'/>">Start DeView</a>
+				      <h3><a class="nav-item nav-link active" href="<c:url value="/main"/>">Home</a></h3>
+			 	  	 <h3> <a class="nav-item nav-link text-light" href="<c:url value='/deview/start'/>">Start DeView</a></h3>
 			    </div>
 		   </div>
 		 	   <nav class="navbar navbar-dark">
@@ -45,9 +47,6 @@
 		    		</c:choose>
 					   	<img src="${pageContext.request.contextPath}/resources/logo/profile.png" width="35" height="35" alt="프로필" >
 						</a>
-		 		<a class="navbar-brand" href="#">
-					<img src="${pageContext.request.contextPath}/resources/logo/cart.png" width="35" height="35" alt="장바구니"  class="mx-2">
-				</a>
 			   </nav>			
 		</nav>
 		<nav class="navbar navbar-light bg-light p-2">

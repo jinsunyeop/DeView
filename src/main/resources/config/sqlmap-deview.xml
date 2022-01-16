@@ -8,10 +8,10 @@
 <mapper namespace="deviewDao">
 
 	<select id="selectDeview" parameterType="int" resultType="deviewDto">
-		SELECT * FROM DEVIEW WHERE user_id=#{userId}; <!-- 이름을 입력 받아서 유저 테이블에 그 이름을 가진 유저 아이디를 받아 검색할 수 있도록 만드셈 -->
+		SELECT * FROM DEVIEW WHERE user_id=#{userId}; 
 	</select>
 	
-	<select id="deviewAllList" resultType="deviewDto"> <!-- resultType은 result가 리스트로 반환되는데 리스트를 articleDto 객체로 반환된다는 뜻 -->
+	<select id="deviewAllList" resultType="deviewDto"> 
 		SELECT * FROM DEVIEW ORDER BY dev_id;
 	</select>
 	
@@ -27,9 +27,7 @@
 	<insert id="insertDeview" parameterType="deviewDto">
 			INSERT INTO DEVIEW(user_id,dev_title,dev_bigcate,dev_smallcate,dev_content,dev_number)
 			VALUES (#{userId},#{devTitle},#{devBigcate},#{devSmallcate},#{devContent},#{devNumber})
-<!-- 	 		<selectKey keyProperty="id" resultType="Long">
-				SELECT IFNULL(MAX(ID),0)+1 FROM member  oracle사용 경우 SELECT NVL(MAX(id),0) FROM member
-			</selectKey>   -->
+
 	</insert>
 		
 	<update id="updateDeview" parameterType="deviewDto">

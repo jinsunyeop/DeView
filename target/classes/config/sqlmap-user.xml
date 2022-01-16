@@ -5,7 +5,7 @@
   
 <mapper namespace="userDao">
 
-	<select id="userList" resultType="userDto"> <!-- resultType은 result가 리스트로 반환되는데 리스트를 member 객체로 반환된다는 뜻 -->
+	<select id="userList" resultType="userDto"> 
 		SELECT * FROM USER ORDER BY user_id;
 	</select>
 	
@@ -13,11 +13,15 @@
 		SELECT * FROM USER WHERE user_id=#{userId};
 	</select>
 	
+	<select id="selectGender" parameterType="int" resultType="String">
+		SELECT user_gender FROM USER WHERE user_id=#{userId};
+	</select>
+	
 	<insert id="insertUser" parameterType="userDto">
 		INSERT INTO USER(user_name,user_gender,user_email,user_password)
 		VALUES (#{userName},#{userGender},#{userEmail},#{userPassword})
 		<selectKey keyProperty="userId" resultType="int">
-			SELECT IFNULL(MAX(user_id),0)+1 FROM USER  <!-- oracle사용 경 SELECT NVL(MAX(id),0) FROM member -->
+			SELECT IFNULL(MAX(user_id),0)+1 FROM USER  
 		</selectKey> 
 	</insert>
 	
@@ -34,27 +38,7 @@
 	<delete id="changePw" parameterType="userDto">
 		UPDATE USER SET user_password=#{userPassword} WHERE user_email=#{userEmail};
 	</delete>
-<!-- 
-	<update id="member.update" parameterType="member">
-		UPDATE member SET name=#{name},password=#{password} WHERE email=#{email}
-	</update>
 
-	<delete id="member.delete" parameterType="member">
-		DELETE FROM MEMBER WHERE email=#{email} AND password= #{password}
-	</delete>
-
-	<select id="member.count" resultType="Integer">
-		SELECT COUNT(*) FROM member;
-	</select>
-	
-	<select id="member.selectByRegdate" parameterType="HashMap" resultType="member">
-		SELECT * FROM member WHERE regdate BETWEEN #{from} AND #{to} ORDER BY regdate DESC
-	</select>
-	
-	<select id="member.selectById" parameterType="Long" resultType="member">
-		SELECT * FROM member WHERE id=#{id}
-	</select>
- -->
 </mapper>
 
 

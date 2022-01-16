@@ -49,7 +49,9 @@
  -->    <context:component-scan base-package="user" />
  		<context:component-scan base-package="deview" />
  		<context:component-scan base-package="main"/>
- 		 <context:component-scan base-package="matching"/>
+ 		<context:component-scan base-package="matching"/>
+ 	    <context:component-scan base-package="chat"/>
+ 		 
  		
     
     <!-- jsp <spring:message>사용 -->
@@ -85,7 +87,7 @@
    				<beans:value>classpath:config/sqlmap-profile.xml</beans:value>
    				<beans:value>classpath:config/sqlmap-deview.xml</beans:value>
       			<beans:value>classpath:config/sqlmap-matching.xml</beans:value>
-   
+         		<beans:value>classpath:config/sqlmap-chat.xml</beans:value>
    			</beans:list>
    		</beans:property>
    	</beans:bean>
@@ -95,7 +97,7 @@
    		destroy-method="clearCache">
    		<beans:constructor-arg ref="sqlSessionFactory" />	
    	</beans:bean>
-
+<!-- 
    	<beans:bean id ="userDao" class="user.repository.UserDaoRepo">
    		<beans:constructor-arg ref="sqlSessionTemplate"/>
    	</beans:bean> 
@@ -107,10 +109,14 @@
    	<beans:bean id ="deviewDao" class="deview.repository.DeviewDaoRepo">
    		<beans:constructor-arg ref="sqlSessionTemplate"/>
    	</beans:bean> 
-   	
-<!--    	  <beans:bean id ="matchingDao" class="matching.repository.MatchingDaoRepo">
+   
+   	  <beans:bean id ="matchingDao" class="matching.repository.MatchingDaoRepo">
    		<beans:constructor-arg ref="sqlSessionTemplate"/>
-   	</beans:bean>  -->
+   	</beans:bean>
+   	
+   	  <beans:bean id ="chatDao" class="chat.repository.ChatDaoRepo">
+   		<beans:constructor-arg ref="sqlSessionTemplate"/>
+   	</beans:bean>  -->  
    	
 
    	<!-- 파일 업로드 -->

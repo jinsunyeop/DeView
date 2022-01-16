@@ -6,7 +6,7 @@
 <div class="container-fluid" >
     <div class="row flex-nowrap">
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark" >
-            <div class="d-flex flex-column  px-3 pt-4 text-white  min-vh-100">
+            <div class="d-flex flex-column  px-2 pt-4 text-white  min-vh-100">
                 <h3 class="text-center ">DeViewer 소개</h3>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0" id="menu">
                     <li class="nav-item text-center pb-3">
@@ -16,7 +16,9 @@
                     	<span> <img src="${pageContext.request.contextPath}/resources/logo/nick2.png" width="20" height="20" alt="nick" class="mx-1" >${profile.profileNick}</span>
                     </li>
                     <li class="nav-item px-1 pb-3">
-                    	<span> <img src="${pageContext.request.contextPath}/resources/logo/git2.png" width="20" height="20" alt="git"  >${profile.profileGit}</span>
+                    	<span> <img src="${pageContext.request.contextPath}/resources/logo/git2.png" width="20" height="20" alt="git"  >
+                    	<a href="${profile.profileGit}">${profile.profileGit}</a>
+                    	</span>
                     </li>
                 	 <li class="nav-item px-1 pb-3">
                     	<span> <img src="${pageContext.request.contextPath}/resources/logo/job2.png" width="20" height="20" alt="git" class="mx-1" >${profile.profileJob}</span>
@@ -24,7 +26,11 @@
 
                 </ul>
                 	  <div class="btn-group" role="group">
-                	  	<c:if test=	"${matchingStatus==null}">                       	  
+                	  	<c:if test=	"${myProfile==0}">                       	  
+	                	  	<h4 class="text-center">프로필 작성 필수</h4>
+<%-- 	                	  	<a href="<c:url value='/profile/profile'/>">프로필 가기</a>
+ --%>					</c:if>
+                	  	<c:if test=	"${matchingStatus==null && myProfile==1}">                       	  
 	                	  	<form:form commandName="matching" method="POST">
 		                		<input type="hidden" name ="matchingRequest" value="${myUserId}">
 		                        <input type="hidden" name ="matchingApply" value="${profile.userId}">
@@ -32,10 +38,12 @@
 						    </form:form>
 					    </c:if>
 					    <c:if test=	"${matchingStatus==false}">                       	  
-					    	<h2>매칭중입니다!!</h2>
+					    	<h2>매칭중</h2>
 					    </c:if>
 					    <c:if test=	"${matchingStatus==true}">                       	  
-					    	<h5>매칭 완료! 프로필로 가서 확인해주세요! </h5>
+					    	<h5>매칭 완료!</h5>
+					    	<a href="<c:url value='/profile/profile'/>">프로필 가기</a>
+					    	
 					    </c:if>
 					    </div>
 			

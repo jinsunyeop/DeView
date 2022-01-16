@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    
+<mapper namespace="chatDao">
+
+	
+	<select id="chatById" parameterType="HashMap" resultType="chatDto">
+		SELECT * FROM CHAT WHERE ((from_id=#{fromId} and to_id=#{toId}) or (from_id=#{toId} and to_id=#{fromId})) order by chat_date;
+	</select>
+	
+
+	<insert id="createChat" parameterType="HashMap">
+		insert into chat(from_id,to_id) values (#{apply},#{request});
+	</insert>
+
+	<insert id="insertChat" parameterType="chatDto">
+		insert into chat(chat_id,from_id,to_id,chat_content) values (#{chatId},#{fromId},#{toId},#{chatContent});
+	</insert>
+
+</mapper>

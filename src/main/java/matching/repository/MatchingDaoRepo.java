@@ -53,11 +53,11 @@ public class MatchingDaoRepo implements MatchingDao{
 
 
 	@Override
-	public void deleteMatching(int request, int apply) {
+	public void matchingCancel(int request, int apply) {
 		HashMap<String,Integer> map = new HashMap<String,Integer>();
 		map.put("request", request);
 		map.put("apply", apply);
-		sqlSessionTemplate.delete("deleteMatching",map);				
+		sqlSessionTemplate.delete("matchingCancel",map);				
 	}
 
 
@@ -69,6 +69,23 @@ public class MatchingDaoRepo implements MatchingDao{
 		map.put("apply", apply);
 		sqlSessionTemplate.update("updateMatching",map);	
 	}
+
+
+
+	@Override
+	public List<MatchingDto> completeMatching1(int request) {
+		return 	sqlSessionTemplate.selectList("completeMatching1",request);	
+
+	}
+
+
+	@Override
+	public List<MatchingDto> completeMatching2(int apply) {
+		return 	sqlSessionTemplate.selectList("completeMatching2",apply);		
+	}
+
+
+
 
 
 

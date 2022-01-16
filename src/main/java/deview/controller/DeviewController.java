@@ -1,12 +1,10 @@
 package deview.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.http.HttpRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,7 +23,6 @@ import user.dto.ProfileDto;
 import user.dto.UserDto;
 import user.service.ProfileService;
 import user.service.UserService;
-import validator.RegisterRequestValidator;
 
 @Controller
 public class DeviewController {
@@ -80,7 +77,9 @@ public class DeviewController {
 		ProfileDto profile = profileService.selectProfile(userId);
 		UserDto deviewUser = userService.selectId(userId);
 		MatchingDto matching = matchingService.selectMatching(user.getUserId(), userId);
-		
+		int myProfile = profileService.countProfile(user.getUserId());
+
+		model.addAttribute("myProfile",myProfile);
 		model.addAttribute("myUserId",user.getUserId());
 		model.addAttribute("user",deviewUser);
 		model.addAttribute("deview",deview);
@@ -98,6 +97,7 @@ public class DeviewController {
 	
 	@RequestMapping(value="/deview/read/{userId}",method=RequestMethod.POST)
 	public String delete(@ModelAttribute("matching") MatchingDto matching) {
+
 		int request = Integer.parseInt(matching.getMatchingRequest());
 		int apply = Integer.parseInt(matching.getMatchingApply());
 		matchingService.requestMatching(request,apply);

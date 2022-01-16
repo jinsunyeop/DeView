@@ -20,14 +20,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import chat.service.ChatService;
 import deview.service.DeviewService;
 import matching.service.MatchingService;
 import user.dto.ProfileDto;
 import user.dto.UserDto;
 import user.service.ProfileService;
+import user.service.UserService;
 
 @Controller
 public class UserProfileController {
+	
+	@Autowired
+	private ChatService chatService;
 
 	@Autowired
 	private ProfileService profileService;
@@ -47,67 +52,47 @@ public class UserProfileController {
 		UserDto user = (UserDto)session.getAttribute("user");
 		List<ProfileDto> profileList1 =  new ArrayList<ProfileDto>();
 		List<ProfileDto> profileList2 =  new ArrayList<ProfileDto>();
-		
+		List<ProfileDto> completeList1 =  new ArrayList<ProfileDto>();
+		List<ProfileDto> completeList2 =  new ArrayList<ProfileDto>();
+
 		int uId=user.getUserId();
-		if(profileService.countProfile(uId)!=0) {
-			model.addAttribute("profile",profileService.selectProfile(uId));
-			if(deviewService.selectDeview(uId)!=null) {
-				model.addAttribute("deview",deviewService.selectDeview(uId));
-			}
-			if(matchingService.selectRequest(uId)!=null) { //내가 요청을 준 
-				for(int i=0; i<matchingService.selectRequest(uId).size(); i++) {
-					ProfileDto profile= profileService.selectProfile(Integer.parseInt(matchingService.selectRequest(uId).get(i).getMatchingApply()));
-					profileList2.add(profile);
-				}
-				model.addAttribute("profileList2",profileList2);
-			}
-			if(matchingService.selectApply(uId)!=null) { // 내가 요청을 받은
-				for(int i=0; i<matchingService.selectApply(uId).size(); i++) {
-					ProfileDto profile= profileService.selectProfile(Integer.parseInt(matchingService.selectApply(uId).get(i).getMatchingRequest()));
-					profileList1.add(profile);
-					System.out.println(profile.getProfileNick());
-				}
-				model.addAttribute("profileList1",profileList1);
-				
-			}
+		model.addAttribute("profile",profileService.selectProfile(uId));
+		model.addAttribute("deview",deviewService.selectDeview(uId));
+			
+		
+		for(int i=0; i<matchingService.selectApply(uId).size(); i++) {
+		ProfileDto profile= profileService.selectProfile(Integer.parseInt(matchingService.selectApply(uId).get(i).getMatchingRequest()));
+		profileList1.add(profile);
 		}
+		model.addAttribute("profileList1",profileList1);
+		
+		for(int i=0; i<matchingService.selectRequest(uId).size(); i++) {
+			ProfileDto profile= profileService.selectProfile(Integer.parseInt(matchingService.selectRequest(uId).get(i).getMatchingApply()));
+			profileList2.add(profile);
+		}
+		model.addAttribute("profileList2",profileList2);
+		
+
+		for(int i=0; i<matchingService.completeMatching2(uId).size(); i++) {
+			ProfileDto profile= profileService.selectProfile(Integer.parseInt(matchingService.completeMatching2(uId).get(i).getMatchingRequest()));
+			completeList1.add(profile);
+		}
+		model.addAttribute("completeList1",completeList1);
+		
+			
+		for(int i=0; i<matchingService.completeMatching1(uId).size(); i++) {
+			ProfileDto profile= profileService.selectProfile(Integer.parseInt(matchingService.completeMatching1(uId).get(i).getMatchingApply()));
+			completeList2.add(profile);
+		}
+		model.addAttribute("completeList2",completeList2);
+			
+		
 		return "/profile/profile";
 	}
-	
-	
-	@RequestMapping(value="/matching/delete",method=RequestMethod.GET)
-	public String matchDelete(@RequestParam(value="request", required=false)String request,HttpSession session) { 	
-		UserDto user = (UserDto)session.getAttribute("user");
-		int applyId = user.getUserId();
-		int requestId = Integer.parseInt(request);
-		matchingService.deleteMatching(requestId, applyId);
-
-
-		return "redirect:/profile/profile";
-	}
-	
-	@RequestMapping(value="/matching/update",method=RequestMethod.GET)
-	public String matchUpdate(@RequestParam(value="request", required=false)String request,HttpSession session) { 	
-		UserDto user = (UserDto)session.getAttribute("user");
-		int applyId = user.getUserId();
-		int requestId = Integer.parseInt(request);
-		matchingService.updateMatching(requestId, applyId);
-		System.out.println(requestId);
-		System.out.println(applyId);
-
-		return "redirect:/profile/profile";
-	}
-
-	
-	
-	
-	
-	
-	
+		
 	@RequestMapping(value="/profile/insert",method=RequestMethod.GET)
 	public String insert(Model model,HttpSession session) {
 		UserDto user = (UserDto)session.getAttribute("user");
-		//만약 프로필이 있는 유저가 프로필 생성을 요청하면 
 		if(profileService.selectProfile(user.getUserId())!=null) {
 			return "redirect:/profile/edit";
 		}else {
@@ -126,11 +111,7 @@ public class UserProfileController {
 		System.out.println(fileName);
 		fileName = Normalizer.normalize(fileName, Normalizer.Form.NFC); //Mac에서 만든 파일을 윈도우에서 사용할땐 자모가 분리될 수 있는 현상
 		String filePath=req.getServletContext().getRealPath("/")+path;
-//		File f = new File(filePath);	
-//		if(!f.exists()) {
-//			f.mkdir();
-//			System.out.println("파일 없음");
-//		}
+
 		
 		if(bindingResult.hasErrors()) {
 			System.out.println(bindingResult.getAllErrors());
@@ -190,7 +171,7 @@ public class UserProfileController {
 			try {
 				File p =  new File(filePath+"/"+fileName);
 				img.transferTo(p);
-				new File(filePath+"/"+ oldImgName).delete(); //기존 파일 삭제
+				new File(filePath+"/"+ oldImgName).delete(); 
 				profile.setProfileImg(fileName);
 				profileService.updateProfile(profile);
 			}catch(Exception e) {
@@ -205,6 +186,28 @@ public class UserProfileController {
 		return "redirect:/profile/profile";
 	}
 	
+	@RequestMapping(value="/matching/delete",method=RequestMethod.GET)
+	public String matchDelete(@RequestParam(value="request", required=false)String request,HttpSession session) { 	
+		UserDto user = (UserDto)session.getAttribute("user");
+		int applyId = user.getUserId();
+		int requestId = Integer.parseInt(request);
+		matchingService.matchingCancel(requestId, applyId);
+
+
+		return "redirect:/profile/profile";
+	}
+	
+	@RequestMapping(value="/matching/update",method=RequestMethod.GET)
+	public String matchUpdate(@RequestParam(value="request", required=false)String request,HttpSession session) { 	
+		UserDto user = (UserDto)session.getAttribute("user");
+		int applyId = user.getUserId();
+		int requestId = Integer.parseInt(request);
+		matchingService.updateMatching(requestId, applyId);
+		chatService.createChat(requestId, applyId);
+
+
+		return "redirect:/profile/profile";
+	}
 	
 	
 	

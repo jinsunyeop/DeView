@@ -37,13 +37,19 @@ public class MatchingService {
 		matchingDao.requestMatching(request, apply);
 	}
 	
-	public void deleteMatching(int request, int apply) {
-		matchingDao.deleteMatching(request, apply);
+	public void matchingCancel(int request, int apply) {
+		matchingDao.matchingCancel(request, apply);
 	}
 	
 	public void updateMatching(int request, int apply) {
 		matchingDao.updateMatching(request, apply);
 	}
 	
-
+	public List<MatchingDto> completeMatching1(int request) {
+		return matchingDao.completeMatching1(request);
+	}	
+	
+	public List<MatchingDto> completeMatching2(int apply) {
+		return matchingDao.completeMatching2(apply);
+	}	
 }

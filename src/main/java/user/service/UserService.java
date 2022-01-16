@@ -24,6 +24,11 @@ public class UserService {
 		userDao.insertUser(user);
 	}
 	
+	//유저 성별 조회
+	public String selectGender(int userId) {
+		return userDao.selectGender(userId);
+	}
+	
 	//유저 조회
 	public UserDto selectId(int userId) {
 		return userDao.selectId(userId);

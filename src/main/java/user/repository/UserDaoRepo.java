@@ -23,6 +23,14 @@ public class UserDaoRepo implements UserDao {
 
 	}
 
+
+
+	@Override
+	public String selectGender(int userId) {
+		return sqlSessionTemplate.selectOne("selectGender", userId);
+
+	}
+	
 	public UserDto selectId(int userId) {
 		return sqlSessionTemplate.selectOne("selectById", userId);
 	}
@@ -50,5 +58,6 @@ public class UserDaoRepo implements UserDao {
 		return sqlSessionTemplate.update("changePw",user);
 
 	}
+
 
 }

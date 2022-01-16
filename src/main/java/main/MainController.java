@@ -54,13 +54,13 @@ public class MainController {
 	@RequestMapping(value= {"/main","/"},method=RequestMethod.GET)
 	public String main(Model model,HttpServletRequest req) {
 		
-		String page = req.getParameter("page"); //페이지 파라미터
+		String page = req.getParameter("page");
 		int size = deviewService.listDeview().size();
 		Map<String,Integer> map = paging(page,size);
 		
 		
 		List<DeviewDto> deviewList =deviewService.pagingDeviewList(map.get("start"),map.get("pageDeview"));
-		List<ProfileDto> profileList=profileService.joinDeview(); //deview 테이블과 user_id inner조인
+		List<ProfileDto> profileList=profileService.joinDeview(); 
 
 		model.addAttribute("allPage",map.get("pages"));
 		model.addAttribute("deviewList",deviewList);
@@ -96,7 +96,7 @@ public class MainController {
 		
 		
 		List<DeviewDto> deviewList= deviewService.deviewBigcate(language);
-		List<ProfileDto> profileList=profileService.joinDeview(); //deview 테이블과 user_id inner조인
+		List<ProfileDto> profileList=profileService.joinDeview(); 
 		System.out.println(lang);
 		
 		model.addAttribute("deviewList",deviewList);
@@ -110,14 +110,14 @@ public class MainController {
 	public String writerList(@RequestParam(value="keyword", required=false)String key,@RequestParam(value="search", required=false)String text,
 	Model model) { 		
 		
-		if(key.equals("1")) { //title 검색을 원하면 
+		if(key.equals("1")) { 
 			model.addAttribute("deviewList",deviewService.deviewSearch1(text));
-		}else if(key.equals("2")){ //profile 닉네임 검색을 원하면
+		}else if(key.equals("2")){ 
 			model.addAttribute("deviewList",deviewService.deviewSearch2(text));
-		}else  { // 둘 다를 원하면
+		}else  {
 			model.addAttribute("deviewList",deviewService.deviewSearch3(text));
 		}
-		List<ProfileDto> profileList=profileService.joinDeview(); //deview 테이블과 user_id inner조인
+		List<ProfileDto> profileList=profileService.joinDeview(); 
 		model.addAttribute("profileList",profileList);
 
 		

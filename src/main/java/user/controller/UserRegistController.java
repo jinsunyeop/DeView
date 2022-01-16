@@ -36,7 +36,7 @@ public class UserRegistController {
 	
 	@RequestMapping(value="/user/regist")
 	public String regist(Model model){
-		model.addAttribute("user",new UserDto()); //커멘드 객체
+		model.addAttribute("user",new UserDto()); 
 		return "user/regist";
 	}
 	
@@ -59,7 +59,6 @@ public class UserRegistController {
 		if(errors.hasErrors()) {
 			return "user/regist";
 		}
-//		위에는 회원 가입 형식 검증
 		try {
 			userService.insertUser(user);
 			return "redirect:/user/login";
@@ -69,7 +68,6 @@ public class UserRegistController {
 		}				
 	}
 	
-	//비밀번호 변경 구현
 	@RequestMapping(value="/user/changePw",method=RequestMethod.GET)
 	public ModelAndView change(Model model){
 		ModelAndView mv = new ModelAndView();
@@ -98,7 +96,6 @@ public class UserRegistController {
 		}
 	}
 	
-	//회원 탈퇴
 	@RequestMapping(value="/user/delete",method=RequestMethod.GET)
 	public String delete(Model model,HttpSession session){
 		model.addAttribute("delete", new DeleteCommand());
