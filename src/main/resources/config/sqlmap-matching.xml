@@ -17,13 +17,14 @@
 		SELECT * FROM MATCHING WHERE matching_apply=#{apply} and matching_status=0;
 	</select>
 	
-	<select id="completeMatching1" parameterType="int" resultType="matchingDto">
-		SELECT * FROM MATCHING WHERE matching_request=#{request} and matching_status =1;
+	<select id="completeMatching" parameterType="HashMap" resultType="matchingDto">
+		SELECT * FROM MATCHING WHERE (matching_request=#{request} or matching_apply=#{apply})and matching_status =1;
 	</select>
 	
- 	<select id="completeMatching2" parameterType="int" resultType="matchingDto">
-		SELECT * FROM MATCHING WHERE matching_apply=#{apply} and matching_status =1;
+	<select id="countCompleteMatching" parameterType="int" resultType="matchingDto">
+		SELECT * FROM MATCHING WHERE  matching_apply=#{apply}and matching_status = 1;
 	</select>
+	
  
  	<insert id="requestMatching" parameterType="HashMap">
 		INSERT INTO MATCHING(matching_request,matching_apply)

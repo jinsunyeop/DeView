@@ -1,5 +1,6 @@
 package chat.repository;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,11 +19,13 @@ public class ChatDaoRepo implements ChatDao {
 	}
 
 	@Override
-	public void createChat(int request, int apply) {
+	public int createChat(int fromId, int toId) {
 		HashMap<String,Integer> map = new HashMap<String,Integer>();
-		map.put("request", request);
-		map.put("apply", apply);
+		map.put("fromId", fromId);
+		map.put("toId", toId);
 		sqlSessionTemplate.insert("createChat",map);
+		int chatId = (int) map.get("chatId");
+		return chatId;
 	}
 
 	@Override
@@ -37,6 +40,16 @@ public class ChatDaoRepo implements ChatDao {
 	public void insertChat(ChatDto chatDto) {
 		sqlSessionTemplate.insert("insertChat",chatDto);
 		
+	}
+
+	@Override
+	public ChatDto createChatDate(int chatId) {
+		return 	sqlSessionTemplate.selectOne("createChatDate",chatId);
+	}
+
+	@Override
+	public void insertFile(ChatDto chatDto) {
+		sqlSessionTemplate.insert("insertFile",chatDto);
 	}
 
 }

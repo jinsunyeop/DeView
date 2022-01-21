@@ -60,4 +60,10 @@ public class UserDaoRepo implements UserDao {
 	}
 
 
+	@Override
+	public int check(String userEmail) {
+		return sqlSessionTemplate.selectOne("checkId",userEmail);	
+	}
+
+
 }

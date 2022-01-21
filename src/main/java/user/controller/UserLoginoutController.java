@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import exception.MemberNotMatchingException;
 import exception.PwNotMatchingException;
+import user.dto.LoginCommand;
 import user.dto.UserDto;
 import user.service.UserService;
 

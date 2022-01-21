@@ -18,6 +18,11 @@ public class DeviewService {
 		return deviewDao.selectDeview(userId);
 	}
 	
+	public DeviewDto selectWithMatchingCount(int apply,int id) {
+		return deviewDao.selectWithMatchingCount(apply,id);
+	}
+	
+	
 	public List<DeviewDto> listDeview() {  //전체 조회
 		return deviewDao.deviewAllList();
 	}
@@ -45,6 +50,10 @@ public class DeviewService {
 	
 	public void deleteDeview(int userId) {
 		 deviewDao.deleteDeview(userId);
+	}
+	
+	public List<DeviewDto> deviewSearch(String devTitle) {
+		return deviewDao.deviewSearch(devTitle);
 	}
 	
 	public List<DeviewDto> deviewSearch1(String devTitle){

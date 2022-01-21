@@ -1,5 +1,9 @@
 package deview.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -14,11 +18,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+//import net.sf.json.JSONObject;
 
 import deview.dto.DeviewDto;
 import deview.service.DeviewService;
 import matching.dto.MatchingDto;
 import matching.service.MatchingService;
+import net.sf.json.JSONObject;
 import user.dto.ProfileDto;
 import user.dto.UserDto;
 import user.service.ProfileService;
@@ -39,6 +47,22 @@ public class DeviewController {
 	@Autowired
 	MatchingService matchingService;
 	
+	@RequestMapping(value="/keywordSearch.do",method=RequestMethod.GET,produces="application/text;charset=utf8")
+	public @ResponseBody String keywordSearch(@RequestParam("keyword") String keyword,HttpServletRequest req,HttpServletResponse resp) {
+		resp.setContentType("text/html;charset=utf-8");
+		resp.setCharacterEncoding("utf-8");
+		if(keyword==null || keyword.equals("")) return null;
+		
+		keyword=keyword.toUpperCase();
+		List keywordList = deviewService.deviewSearch(keyword);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("keyword", keywordList);
+		String jsonInfo = jsonObject.toString();
+		return jsonInfo;
+	}
+	
+	
+	
 	
 	@RequestMapping(value="/deview/start",method=RequestMethod.GET)
 	public String profile(Model model,HttpSession session) {
@@ -47,7 +71,11 @@ public class DeviewController {
 		
 		if(deviewService.selectDeview(user.getUserId())!=null){ //프로필과 데뷰 서비스 1 대 1
 			return "redirect:/profile/profile";
-		}else {
+		}
+		if(profileService.countProfile(user.getUserId())==0) {
+			return "redirect:/profile/insert";
+		}
+		else {
 			model.addAttribute("user",user);
 			model.addAttribute("profile",profile);
 			model.addAttribute("command",new DeviewDto());

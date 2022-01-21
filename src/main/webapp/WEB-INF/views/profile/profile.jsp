@@ -32,7 +32,7 @@
 			<a onclick="popup(this)" id="edit"><img src="../resources/logo/write.png" width="20" height="20" alt="edit" class="mx-2"></a>
 		</c:if>
 		</strong></h1>
- 			<img src="<c:url value='../resources/image/${profile.profileImg}'/>" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
+ 			<img src="<c:url value='../resources/image/${profile.profileImg}'/>" width="140" height="140" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
  			
 			<ul class="list-group list-group-flush mt-2">
 				<li class="list-group-item"><h4>Github 저장소</h4></li>
@@ -64,34 +64,24 @@
 			</a></h3>
 			</c:when>
 			<c:otherwise>
-			<h2><strong>등록한 DeViewer</strong></h2>
-			<table class="table table-dark">
-			  <thead>
-			    <tr>
-			      <th>deview 번호</th>
-			      <th>deview 제목</th>
-			      <th>주요 언어</th>
-			      <th>주요 기술</th>
-			      <th>전화 번호</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr class="table-active">
-			      	<td>${deview.devId}</td>
-			      	<td>${deview.devTitle}</td>
-			      	<td>${deview.devBigcate}</td>
-			      	<td>${deview.devSmallcate}</td>
-			      	<td>${deview.devNumber}</td>
-			    </tr>
-
-			    <tr>
-			      <td colspan="6" class="text-right">
-			        <a href="<c:url value='/deview/edit'/>"><img src="../resources/logo/edit3.png" width="20" height="20" alt="edit" class="mx-2"></a>
-			      	<a onclick="popup2(this)" id="delete"><img src="../resources/logo/delete3.png" width="20" height="20" alt="update" class="mx-2"></a>
-			      </td>
-			    </tr>
-			  </tbody>
-			</table>
+			<div class="mt-4 p-5 bg-light text-black rounded">
+			<ul class="list-group list-group-flush px-4 pt-3">
+  			<h1>나의 DeView</h1>
+		  	 <li class="list-group-item mb-3">
+		  	 <strong>deview 제목 :  ${deview.devTitle}</strong>
+		  	 </li>		   <li class="list-group-item mb-3">
+		  	 <strong>주요 언어 :   ${deview.devBigcate}</strong>
+		  	 </li>		 
+		  	   <li class="list-group-item mb-3">
+		  	 <strong>주요 기술 :   ${deview.devSmallcate}</strong>
+		  	 </li>
+		  	  <li class="list-group-item mb-3">
+		   <strong>  평균 답변 시간 :    ${deview.devResp}</strong>
+		  	 </li>
+		  	 </ul>
+		  	  <a href="<c:url value='/deview/edit'/>"><img src="../resources/logo/edit3.png" width="20" height="20" alt="edit" class="mx-2"></a>
+			  <a onclick="popup2(this)" id="delete"><img src="../resources/logo/delete3.png" width="20" height="20" alt="delete" class="mx-2"></a>
+			</div>
 			</c:otherwise>
 		</c:choose>
 				<hr>
@@ -150,43 +140,22 @@
 			</div>
 			<hr>
 		
-			<h2 class="font-weight-bold"><strong>나의 DeView에 요청을 준 유저와 채팅 하러 가기</strong> </h2>
+			<h2 class="font-weight-bold"><strong>매칭된 채팅</strong> </h2>
 			<div class="row m-5" style="text-align:center;">
- 			<c:if test="${not empty completeList1}">
-				<c:forEach var="complete1" items="${completeList1}" varStatus="Loop">
+ 			<c:if test="${not empty completeList}">
+				<c:forEach var="complete" items="${completeList}" varStatus="Loop">
 				  <div class="col-sm-5 col-md-3 border border-2 mx-5 mt-5">
 				    <div class="thumbnail mx-auto">
-					<img src="${pageContext.request.contextPath}/resources/image/${complete1.profileImg}" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
+					<img src="${pageContext.request.contextPath}/resources/image/${complete.profileImg}" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
 				      <div class="caption">
-				      	<span>${complete1.profileNick}</span>
-				        <p><a id= "${complete1.userId}"class="btn btn-primary" onclick="popup3(this)" role="button">채팅창</a></p>
+				      	<span>${complete.profileNick}</span>
+				        <p><a id= "${complete.userId}"class="btn btn-primary" onclick="popup3(this)" role="button">채팅창</a></p>
 				      </div>
 				    </div>
 				  </div>
 				</c:forEach>
 			</c:if>
-			 <c:if test="${empty completeList1}">
-			 		<h5>현재 매칭된 채팅이 존재하지 않습니다.</h5>
-			</c:if>
-			</div>
-			<hr>
-			
-			<h2 class="font-weight-bold"><strong>내가 요청한 DeViewer와 채팅 하러 가기</strong> </h2>
-			<div class="row m-5" style="text-align:center;">
- 			<c:if test="${not empty completeList2}">
-				<c:forEach var="complete2" items="${completeList2}" varStatus="Loop">
-				  <div class="col-sm-5 col-md-3 border border-2 mx-5 mt-5">
-				    <div class="thumbnail mx-auto">
-					<img src="${pageContext.request.contextPath}/resources/image/${complete2.profileImg}" width="80" height="80" alt="img" class="rounded-circle m-2 " onerror="this.src='../resources/logo/default.png'" >
-				      <div class="caption">
-				      	<span>${complete2.profileNick}</span>
-				        <p><a id= "${complete2.userId}"class="btn btn-primary" onclick="popup4(this)" role="button">채팅창</a></p>
-				      </div>
-				    </div>
-				  </div>
-				</c:forEach>
-			</c:if>
-			 <c:if test="${empty completeList2}">
+			 <c:if test="${empty completeList}">
 			 		<h5>현재 매칭된 채팅이 존재하지 않습니다.</h5>
 			</c:if>
 			</div>
@@ -218,23 +187,9 @@ function popup2(url){
 	window.open(url,name,"width=700,height=500,toolbar=no,status=no,location=no,scrollbars=yes,menubar=no,resizable=yes,left=70,right=70");	
 }
 </script>
-
 <script>
 function popup3(url){
-	var pop = "/matching/chatToId/"+$(url).attr("id");
-	var ctx = getContextPath();
-	  function getContextPath() {
-	  return sessionStorage.getItem("contextpath");
-	}
-	  var name = "popup";
-	  var url = ctx+pop;  
-	window.open(url,name,"width=700,height=500,toolbar=no,status=no,location=no,scrollbars=yes,menubar=no,resizable=yes,left=70,right=70");	
-}
-</script>
-
-<script>
-function popup4(url){
-	var pop = "/matching/chatToId/"+$(url).attr("id");
+	var pop = "/matching/chat/"+$(url).attr("id");
 	var ctx = getContextPath();
 	  function getContextPath() {
 	  return sessionStorage.getItem("contextpath");

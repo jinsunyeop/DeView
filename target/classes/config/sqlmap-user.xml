@@ -9,6 +9,10 @@
 		SELECT * FROM USER ORDER BY user_id;
 	</select>
 	
+	<select id ="checkId" parameterType="String" resultType="int">
+		SELECT count(*) FROM USER WHERE user_email=#{userEmail};
+	</select>
+	
 	<select id="selectById" parameterType="int" resultType="userDto">
 		SELECT * FROM USER WHERE user_id=#{userId};
 	</select>

@@ -52,8 +52,7 @@ public class UserProfileController {
 		UserDto user = (UserDto)session.getAttribute("user");
 		List<ProfileDto> profileList1 =  new ArrayList<ProfileDto>();
 		List<ProfileDto> profileList2 =  new ArrayList<ProfileDto>();
-		List<ProfileDto> completeList1 =  new ArrayList<ProfileDto>();
-		List<ProfileDto> completeList2 =  new ArrayList<ProfileDto>();
+		List<ProfileDto> completeList =  new ArrayList<ProfileDto>();
 
 		int uId=user.getUserId();
 		model.addAttribute("profile",profileService.selectProfile(uId));
@@ -71,20 +70,18 @@ public class UserProfileController {
 			profileList2.add(profile);
 		}
 		model.addAttribute("profileList2",profileList2);
-		
 
-		for(int i=0; i<matchingService.completeMatching2(uId).size(); i++) {
-			ProfileDto profile= profileService.selectProfile(Integer.parseInt(matchingService.completeMatching2(uId).get(i).getMatchingRequest()));
-			completeList1.add(profile);
+		for(int i=0; i<matchingService.completeMatching(uId).size(); i++) {
+			if(Integer.parseInt(matchingService.completeMatching(uId).get(i).getMatchingRequest())==uId){
+				ProfileDto profile= profileService.selectProfile(Integer.parseInt(matchingService.completeMatching(uId).get(i).getMatchingApply()));
+				completeList.add(profile);
+			}else {
+				ProfileDto profile= profileService.selectProfile(Integer.parseInt(matchingService.completeMatching(uId).get(i).getMatchingRequest()));
+				completeList.add(profile);
+			}
 		}
-		model.addAttribute("completeList1",completeList1);
+		model.addAttribute("completeList",completeList);
 		
-			
-		for(int i=0; i<matchingService.completeMatching1(uId).size(); i++) {
-			ProfileDto profile= profileService.selectProfile(Integer.parseInt(matchingService.completeMatching1(uId).get(i).getMatchingApply()));
-			completeList2.add(profile);
-		}
-		model.addAttribute("completeList2",completeList2);
 			
 		
 		return "/profile/profile";
@@ -125,10 +122,8 @@ public class UserProfileController {
 				profile.setProfileImg(fileName);
 				profileService.insertProfile(profile);
 			}catch(RuntimeException e) {
-				System.out.println("열로1");
 				return "/profile/profile";
 			} catch (IOException e) {
-				System.out.println("열로2");
 				e.printStackTrace();
 			}
 		}else {
@@ -203,8 +198,6 @@ public class UserProfileController {
 		int applyId = user.getUserId();
 		int requestId = Integer.parseInt(request);
 		matchingService.updateMatching(requestId, applyId);
-		chatService.createChat(requestId, applyId);
-
 
 		return "redirect:/profile/profile";
 	}

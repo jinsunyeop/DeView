@@ -29,6 +29,19 @@ public class UserService {
 		return userDao.selectGender(userId);
 	}
 	
+	public String checkEmail(String userEmail) {
+		String agree = "false";
+		String reject = "true";
+		int check =userDao.check(userEmail);
+		if(check==0) {
+			return agree;
+		}else {
+			return reject;
+		}
+		
+		
+	}
+	
 	//유저 조회
 	public UserDto selectId(int userId) {
 		return userDao.selectId(userId);

@@ -58,7 +58,7 @@ CREATE TABLE `deview` (
 	`dev_bigcate`	varchar(10)	NOT NULL, -- 주요 언어
 	`dev_smallcate`	varchar(10) NOT	NULL, -- 주요 기술 
 	`dev_content`	varchar(400) NOT NULL, -- 직무,경험 
-	`dev_number`	varchar(40)	NOT NULL, -- 서비스 개설자 번호 
+	`dev_resp`    int not null default 0, -- 평균 답변시간
 	`dev_date`	 datetime DEFAULT NOW(), -- 개설 날짜 
 	foreign key(user_id) references USER(user_id) on update cascade on delete cascade
 );
@@ -123,7 +123,7 @@ CREATE TABLE `chat` (
 	`to_id`	int	NOT NULL, --  matching request id
 	`chat_content`	varchar(400), -- 채팅 내용
     `chat_date` datetime DEFAULT NOW(),
-	foreign key(chat_id) references USER(user_id) on update cascade on delete cascade,
+	foreign key(to_id) references USER(user_id) on update cascade on delete cascade,
 	foreign key(from_id) references USER(user_id) on update cascade on delete cascade
 );
 

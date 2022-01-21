@@ -1,10 +1,19 @@
 package chat.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.text.Normalizer;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +22,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import chat.dto.ChatDto;
 import chat.service.ChatService;
@@ -30,72 +41,31 @@ public class ChatController {
 	@Autowired
 	ProfileService profileService;
 	
-	@RequestMapping(value="/matching/chatToId/{Id}",method=RequestMethod.GET)
-	public String chatting1(Model model,@PathVariable String Id,HttpSession session) {
-		int toId = Integer.parseInt(Id);
+	@Autowired
+	ChatDto chatdto;
+	
+	@RequestMapping(value="/matching/chat/{Id}",method=RequestMethod.GET)
+	public String chatting(Model model,@PathVariable String Id,HttpSession session) {
 		UserDto user = (UserDto)session.getAttribute("user");
-		int fromId = user.getUserId();
-		ProfileDto profile1 = profileService.selectProfile(fromId);
-		ProfileDto profile2 = profileService.selectProfile(toId);
-
+		int fromId = Integer.parseInt(Id);
+		int toId = user.getUserId();
 		
+		ProfileDto yourProfile = profileService.selectProfile(fromId);
+		ProfileDto myProfile = profileService.selectProfile(toId);
 		List<ChatDto> chatting =  chatService.chatById(fromId, toId);
-		if(chatting.isEmpty()) {
-			return "redirect:/profile/profile";
-		}
+		
 		int chatId = chatting.get(0).getChatId();
-
-		model.addAttribute("profile1",profile1);
-		model.addAttribute("profile2",profile2);
+		
+		model.addAttribute("yourProfile",yourProfile);
+		model.addAttribute("myProfile",myProfile);
 		model.addAttribute("chatting",chatting);
+		model.addAttribute("fromId",fromId);
 		model.addAttribute("chatId",chatId);
-		model.addAttribute("toId",toId);
 
 		return "/matching/chat";
 	}
 	
-	@RequestMapping(value="/matching/chatToId",method=RequestMethod.POST)
-	public String chatting1(HttpServletRequest req,HttpSession session)  {
-		ChatDto chatDto = new ChatDto();
-
-		try {
-		chatDto.setChatId( Integer.parseInt(URLDecoder.decode(req.getParameter("chatId"),"UTF-8")));
-		chatDto.setFromId(Integer.parseInt(URLDecoder.decode(req.getParameter("fromId"),"UTF-8")));
-		chatDto.setToId( Integer.parseInt(URLDecoder.decode(req.getParameter("toId"),"UTF-8")));
-		chatDto.setChatContent(URLDecoder.decode(req.getParameter("chatContent"),"UTF-8"));
-		chatService.insertChat(chatDto);
-		} catch(UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return "redirect:/matching/chatToId/"+req.getParameter("toId");
-
-	}
-	
-	@RequestMapping(value="/matching/chatFromId/{Id}",method=RequestMethod.GET)
-	public String chatting(Model model,@PathVariable String Id,HttpSession session) {
-		int fromId = Integer.parseInt(Id); //
-		UserDto user = (UserDto)session.getAttribute("user");
-		int toId = user.getUserId();
-		ProfileDto profile1 = profileService.selectProfile(fromId);  //사스케
-		ProfileDto profile2 = profileService.selectProfile(toId);   //나 자신
-
-		List<ChatDto> chatting =  chatService.chatById(fromId, toId);
-		if(chatting.isEmpty()) {
-			return "redirect:/profile/profile";
-		}
-		
-		int chatId = chatting.get(0).getChatId();
-
-		model.addAttribute("profile1",profile1);
-		model.addAttribute("profile2",profile2);
-		model.addAttribute("chatting",chatting);
-		model.addAttribute("chatId",chatId);
-		model.addAttribute("fromId",fromId);
-
-		return "/matching/chat2";
-	}
-
-	@RequestMapping(value="/matching/chatFromId",method=RequestMethod.POST)
+	@RequestMapping(value="/matching/chat",method=RequestMethod.POST)
 	public String chatting(HttpServletRequest req,HttpSession session)  {
 		ChatDto chatDto = new ChatDto();
 
@@ -108,8 +78,96 @@ public class ChatController {
 		} catch(UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		return "redirect:/matching/chatFromId/"+req.getParameter("toId");
+		return "redirect:/matching/chat/"+req.getParameter("fromId");
 
 	}
+	
+	
+	@RequestMapping(value="/matching/sendFile",method=RequestMethod.POST)
+	public String sendFile(HttpServletRequest req,HttpSession session,@RequestParam(value="file")MultipartFile file,Model model)  {
+		String fileName =  file.getOriginalFilename();
+		System.out.println(fileName);
+		fileName = Normalizer.normalize(fileName, Normalizer.Form.NFC); 
+		int fromId = Integer.parseInt(req.getParameter("fromId"));
+		int toId = Integer.parseInt(req.getParameter("toId"));
+		int chatId = Integer.parseInt(req.getParameter("chatId"));
+
+		String path = "/resources//chatFile";
+		String filePath=req.getServletContext().getRealPath("/")+path;
+		try {
+			
+			File p =  new File(filePath+"/"+fileName);
+			file.transferTo(p);
+			chatdto.setChatId(chatId);
+			chatdto.setFromId(fromId);
+			chatdto.setToId(toId);
+			chatdto.setChatFile(fileName);
+			chatService.insertFile(chatdto);
+			
+		}catch(Exception e) {
+			model.addAttribute("msg","업로드 실패하였습니다");
+			return "/matching/chat"+req.getParameter("fromId");
+		}
+		
+		return "redirect:/matching/chat/"+req.getParameter("fromId");
+	}
+	
+	
+	@RequestMapping(value="/download",method=RequestMethod.GET)
+	public void download(HttpServletRequest req,HttpServletResponse resp) throws Exception {
+	        String fileName = req.getParameter("chatFile");
+	        String path = "/resources//chatFile";
+			String filePath=req.getServletContext().getRealPath("/")+path;
+	        try {
+	        	resp.setContentType("text/html;charset=utf-8");
+	        	PrintWriter writer = resp.getWriter();
+	        	File file = new File(filePath+"//"+fileName);
+	        	if(!file.exists()) {
+	        		System.out.println("파일없음");
+	        	}else {
+	        		InputStream is = null;
+	        		OutputStream os = null;
+	        		try {
+	        			 is = new FileInputStream(file);
+	        		}catch(Exception e) {
+	        			
+	        		}
+	        		String browser = req.getHeader("User-Agent"); 
+	                //파일 인코딩 
+	                if (browser.contains("MSIE") || browser.contains("Trident")
+	                        || browser.contains("Chrome")) {
+	                	fileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+",
+	                            "%20");
+	                } else {
+	                	fileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+	                }
+	                resp.reset();
+	                resp.setContentType("application/octet-stream");
+	                resp.setHeader("content-Disposition", "attachment; filename=\""+fileName+"\"");
+	                os = resp.getOutputStream();
+	                byte b[] = new byte[(int)file.length()];
+	                int leng = 0;
+	                while((leng=is.read(b))>0) {
+	                	os.write(b,0,leng);
+	                	
+	                }
+	                is.close();
+	                os.close();
+	            } 
+	        		
+	        	
+	        	
+	        	
+	        }catch(Exception e){
+	        	e.printStackTrace();
+	        	
+	        }
+	        
+	
+		}
+
+	
+	
+	
 
 }

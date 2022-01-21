@@ -18,12 +18,12 @@
 <script type="text/javascript">
 	function submitFunction(){
 		var chatId = '${chatId}';
-		var fromId = '${sessionScope.user.userId}';
-		var toId = '${toId}';
+		var fromId = '${fromId}';
+		var toId = '${sessionScope.user.userId}';
 		var chatContent = $('#chatContent').val();
 		$.ajax({
 			type : "POST",
-			url : "${pageContext.request.contextPath}/matching/chatToId",
+			url : "${pageContext.request.contextPath}/matching/chat",
 			data : {
 				chatId : encodeURIComponent(chatId),
 				fromId : encodeURIComponent(fromId),
@@ -59,22 +59,32 @@
             <div class="col-md-6">
                 <div class="card card-bordered">
                     <div class="card-header">
-                        <h4 class="card-title"><strong>${profile2.profileNick}님과의 대화</strong></h4> <a class="btn btn-xs btn-secondary" href="${pageContext.request.contextPath}/matching/chatToId/${toId}" data-abc="true"> <img class="avatar" src="${pageContext.request.contextPath}/resources/logo/refresh.png" width="80" height="80" alt="..."></a>
+                        <h4 class="card-title"><strong>${yourProfile.profileNick}님과의 대화</strong></h4> <a class="btn btn-xs btn-secondary" href="${pageContext.request.contextPath}/matching/chat/${fromId}" data-abc="true"> <img class="avatar" src="${pageContext.request.contextPath}/resources/logo/refresh.png" width="80" height="80" alt="..."></a>
                     </div>
                     <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
 						<c:forEach var="chat" items="${chatting}" varStatus="Loop">
-						<c:if test="${chat.toId != toId}">
-                        <div class="media media-chat"> <img class="avatar" src="${pageContext.request.contextPath}/resources/image/${profile2.profileImg}" width="80" height="80" alt="...">
+		
+						<c:if test="${chat.fromId == sessionScope.user.userId}">
+                        <div class="media media-chat"> <img class="avatar" src="${pageContext.request.contextPath}/resources/image/${yourProfile.profileImg}" width="80" height="80" alt="...">
                             <div class="media-body">
-                                <p>${chat.chatContent }</p>
+                                <p>${chat.chatContent}</p>
+                                <c:if test="${!empty chat.chatFile}">
+                                <a href="${pageContext.request.contextPath}/download/${chat.chatFile}">${chat.chatFile}</a>
+                              
+                                </c:if>
                             </div>
                         </div>
                         </c:if>
-                       	<c:if test="${chat.toId == toId}">
+                       	<c:if test="${chat.fromId != sessionScope.user.userId}">
         
                          <div class="media media-chat media-chat-reverse">
                             <div class="media-body">
+                            	 <c:if test="${not empty chat.chatContent}">
                                 <p>${chat.chatContent }</p>
+                                </c:if>
+                                <c:if test="${not empty chat.chatFile}">
+                                <a href="${pageContext.request.contextPath}/download?chatFile=${chat.chatFile}">${chat.chatFile}</a>
+                                </c:if>                                 
                             </div>
                         </div>
                         </c:if>
@@ -89,10 +99,22 @@
                         </div>
                     </div>
                     <div class="publisher bt-1 border-light">
- 							<img class="avatar" src="${pageContext.request.contextPath}/resources/image/${profile1.profileImg}" width="80" height="80" alt="...">                   
+ 							<img class="avatar" src="${pageContext.request.contextPath}/resources/image/${myProfile.profileImg}" width="80" height="80" alt="...">                   
  					 	 	<input class="publisher-input" type="text" placeholder="Write something"  id="chatContent">
-                    	 <a href="${pageContext.request.contextPath}/matching/chatToId/${toId}" type="button" class="publisher-btn text-info"  data-abc="true" onclick="submitFunction()"><i class="fa fa-paper-plane"></i></a> 
+                    	 <a href="${pageContext.request.contextPath}/matching/chat/${fromId}" type="button" class="publisher-btn text-info"  data-abc="true" onclick="submitFunction()"><i class="fa fa-paper-plane"></i></a>
                     </div>
+                    <div class="bt-1 border-light">
+                  	<form method="POST" enctype="multipart/form-data"  action= "${pageContext.request.contextPath}/matching/sendFile">
+					<input type="hidden" name="fromId" value="${fromId}">
+					<input type="hidden" name="toId" value="${sessionScope.user.userId}">
+					<input type="hidden" name="chatId" value="${chatId}">
+					<input type="file" name="file" id="formFile" class="form-control mx-auto col-xs-2" required/>
+					</div>
+					<div class="bt-1 border-light">
+					<input type="submit" class="btn btn-outline-primary float-right" value="파일 보내기" />
+					</div>
+                  	</form>  
+                  
                 </div>
             </div>
             <button type="button" class="btn btn-outline-primary" onclick="popupClose()">닫기</button>

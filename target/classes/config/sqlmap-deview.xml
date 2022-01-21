@@ -11,6 +11,10 @@
 		SELECT * FROM DEVIEW WHERE user_id=#{userId}; 
 	</select>
 	
+	<select id="selectWithMatchingCount" parameterType="hashMap" resultType="deviewDto">
+		SELECT D.* ,count(*) as dev_matching from matching m, deview d where matching_apply=#{apply} and dev_id=#{dev};
+	</select>
+	
 	<select id="deviewAllList" resultType="deviewDto"> 
 		SELECT * FROM DEVIEW ORDER BY dev_id;
 	</select>
@@ -25,14 +29,14 @@
 	</select>
 
 	<insert id="insertDeview" parameterType="deviewDto">
-			INSERT INTO DEVIEW(user_id,dev_title,dev_bigcate,dev_smallcate,dev_content,dev_number)
-			VALUES (#{userId},#{devTitle},#{devBigcate},#{devSmallcate},#{devContent},#{devNumber})
+			INSERT INTO DEVIEW(user_id,dev_title,dev_bigcate,dev_smallcate,dev_content,dev_resp)
+			VALUES (#{userId},#{devTitle},#{devBigcate},#{devSmallcate},#{devContent},#{devResp})
 
 	</insert>
 		
 	<update id="updateDeview" parameterType="deviewDto">
 		UPDATE DEVIEW SET dev_title=#{devTitle},dev_bigcate=#{devBigcate},
-		dev_smallcate=#{devSmallcate},dev_content=#{devContent},dev_number=#{devNumber} WHERE user_id=#{userId};
+		dev_smallcate=#{devSmallcate},dev_content=#{devContent},dev_resp=#{devResp} WHERE user_id=#{userId};
 	</update>
 	
 	<delete id="deleteDeview" parameterType="int">
@@ -42,6 +46,10 @@
 	
 	<select id="deviewBigcate" parameterType="String" resultType="deviewDto">
 		SELECT * FROM DEVIEW WHERE dev_bigcate=#{devBigcate}; 
+	</select>
+	
+	<select id="deviewSearch" parameterType="String" resultType="String">
+		SELECT dev_title FROM DEVIEW WHERE dev_title LIKE CONCAT('%',#{devTitle},'%')
 	</select>
 	
 	<select id="deviewSearch1" parameterType="String" resultType="deviewDto">

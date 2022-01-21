@@ -90,6 +90,22 @@ public class DeviewDaoRepo implements DeviewDao {
 	}
 
 
+	@Override
+	public DeviewDto selectWithMatchingCount(int apply, int dev) {
+		HashMap<String,Integer> map = new HashMap<String,Integer>();
+		map.put("apply", apply);
+		map.put("dev", dev);
+     
+		return sqlSessionTemplate.selectOne("selectWithMatchingCount",map);		 //전체 조회
+	}
+
+
+	@Override
+	public List<DeviewDto> deviewSearch(String devTitle) {
+		return sqlSessionTemplate.selectList("deviewSearch",devTitle);
+	}
+
+
 
 
 }

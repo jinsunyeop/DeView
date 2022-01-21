@@ -45,11 +45,9 @@ public class MatchingService {
 		matchingDao.updateMatching(request, apply);
 	}
 	
-	public List<MatchingDto> completeMatching1(int request) {
-		return matchingDao.completeMatching1(request);
+	public List<MatchingDto> completeMatching(int uId) {
+		return matchingDao.completeMatching(uId);
 	}	
 	
-	public List<MatchingDto> completeMatching2(int apply) {
-		return matchingDao.completeMatching2(apply);
-	}	
+	
 }

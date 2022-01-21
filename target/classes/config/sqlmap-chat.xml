@@ -8,16 +8,27 @@
 
 	
 	<select id="chatById" parameterType="HashMap" resultType="chatDto">
-		SELECT * FROM CHAT WHERE ((from_id=#{fromId} and to_id=#{toId}) or (from_id=#{toId} and to_id=#{fromId})) order by chat_date;
+		SELECT * FROM CHAT WHERE  ( (from_id=#{fromId} and to_id=#{toId}) or (from_id=#{toId} and to_id=#{fromId}) )  order by chat_date;
+	</select>
+	
+	<select id="createChatDate" parameterType="int" resultType="chatDto">
+		SELECT chat_id FROM CHAT WHERE  chat_id=#{chatId}  and chat_create = 1;
 	</select>
 	
 
-	<insert id="createChat" parameterType="HashMap">
-		insert into chat(from_id,to_id) values (#{apply},#{request});
+	<insert id="createChat" parameterType="HashMap" useGeneratedKeys="true" keyProperty="chatId" keyColumn="chat_id">
+		insert into chat(from_id,to_id,chat_create) values (#{fromId},#{toId},1);
+			<selectKey keyProperty="chatId" resultType="int" order="AFTER">
+			SELECT IFNULL((SELECT MAX(chat_id) from CHAT),0) FROM DUAL; <!-- oracle사용 경 SELECT NVL(MAX(id),0) FROM member -->
+			</selectKey> 
 	</insert>
 
 	<insert id="insertChat" parameterType="chatDto">
 		insert into chat(chat_id,from_id,to_id,chat_content) values (#{chatId},#{fromId},#{toId},#{chatContent});
+	</insert>
+	
+	<insert id="insertFile" parameterType="chatDto">
+		insert into chat(chat_id,from_id,to_id,chat_file) values (#{chatId},#{fromId},#{toId},#{chatFile});
 	</insert>
 
 </mapper>

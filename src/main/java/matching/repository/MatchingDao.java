@@ -12,8 +12,7 @@ public interface MatchingDao {
 	public abstract void requestMatching(int request,int apply);
 	public abstract void matchingCancel(int request,int apply);
 	public abstract void updateMatching(int request,int apply);
-	public abstract List<MatchingDto> completeMatching1(int request);
-	public abstract List<MatchingDto> completeMatching2(int apply);
+	public abstract List<MatchingDto> completeMatching(int uId);
 
 	
 

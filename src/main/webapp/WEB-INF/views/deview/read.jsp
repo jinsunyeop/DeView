@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/resources/layout/header.jsp"%>
-
+<style>
+ a { color:white !important; text-decoration:none !important } 
+ a:hover { text-decoration:none !important }
+</style>
 <body>
 <div class="container-fluid" >
     <div class="row flex-nowrap">
@@ -23,9 +26,10 @@
                 	 <li class="nav-item px-1 pb-3">
                     	<span> <img src="${pageContext.request.contextPath}/resources/logo/job2.png" width="20" height="20" alt="git" class="mx-1" >${profile.profileJob}</span>
                     </li>
+      
 
                 </ul>
-                	  <div class="btn-group" role="group">
+                	  <div class="btn-group mx-auto" role="group">
                 	  	<c:if test=	"${myProfile==0}">                       	  
 	                	  	<h4 class="text-center">프로필 작성 필수</h4>
 <%-- 	                	  	<a href="<c:url value='/profile/profile'/>">프로필 가기</a>
@@ -37,13 +41,13 @@
 							    <button type="submit" class="btn btn-primary">매칭하기</button>
 						    </form:form>
 					    </c:if>
-					    <c:if test=	"${matchingStatus==false}">                       	  
-					    	<h2>매칭중</h2>
-					    </c:if>
+					    <c:if test=	"${matchingStatus==false}">
+					    <h2>매칭중</h2>
+					    <div class="spinner-border text-primary mx-2">
+					    </div>
+                   	    </c:if>
 					    <c:if test=	"${matchingStatus==true}">                       	  
-					    	<h5>매칭 완료!</h5>
-					    	<a href="<c:url value='/profile/profile'/>">프로필 가기</a>
-					    	
+					    	<h5><a href="<c:url value='/profile/profile'/>">매칭 완료!</a></h5>					    	
 					    </c:if>
 					    </div>
 			
@@ -52,11 +56,15 @@
         </div>
         <div class="border border-5 col py-3 m-4 ">
         <div class="px-5 pt-3">
-		  <h1 class="text-dark"><strong>${deview.devTitle}</strong></h1>
-		  <h4 class="text-muted">${user.userName}</h4>
+		  <h1 class="text-dark"><strong>${deview.devTitle}</strong></h1> 
+		  <h4 class="text-muted">${user.userName}</h4> 
 		</div>
 		 <hr>
 		<ul class="list-group list-group-flush px-4 pt-3">
+		   <li class="list-group-item mb-3">
+			  <img src="${pageContext.request.contextPath}/resources/logo/matching.png" width="50" height="50" alt="matching" class="rounded-circle mx-2 " onerror="this.src='${pageContext.request.contextPath}/resources/logo/default.png'" >
+		 		<span>현재까지의 매칭 횟수 : ${deview.devMatching} 명</span>
+		 </li>
 		  <li class="list-group-item">
 		   	<img src="${pageContext.request.contextPath}/resources/logo/logo1.png" width="30" height="30" alt="gender" class="rounded-circle mx-2 " onerror="this.src='${pageContext.request.contextPath}/resources/logo/default.png'" >
 		 	저의 성별은 ${user.userGender } 입니다! 
@@ -72,7 +80,11 @@
 		  <li class="list-group-item">
 		   	<img src="${pageContext.request.contextPath}/resources/logo/programing.png" width="30" height="30" alt="programing" class="rounded-circle mx-2 " onerror="this.src='${pageContext.request.contextPath}/resources/logo/default.png'" >
 		 	 제가 리뷰하고자 하는 직무는 ${deview.devSmallcate } 사용하고 있습니다! 
-		  </li>			
+		  </li>	
+		  <li class="list-group-item">
+		   	<img src="${pageContext.request.contextPath}/resources/logo/time.png" width="30" height="30" alt="time" class="rounded-circle mx-2 " onerror="this.src='${pageContext.request.contextPath}/resources/logo/default.png'" >
+		 	 저의 평균 응답 시간은 ${deview.devResp } 입니다! 
+		  </li>							
 		  
 		</ul>
 		 <hr>

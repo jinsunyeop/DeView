@@ -1,4 +1,4 @@
-package user.controller;
+package user.dto;
 
 import org.hibernate.validator.constraints.NotEmpty;
 

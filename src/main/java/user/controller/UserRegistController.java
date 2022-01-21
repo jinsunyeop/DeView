@@ -1,10 +1,14 @@
 package user.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +22,9 @@ import org.springframework.web.servlet.ModelAndView;
 import exception.DoNotAgreeException;
 import exception.MemberNotMatchingException;
 import exception.PwNotMatchingException;
+import user.dto.DeleteCommand;
 import user.dto.UserDto;
+import user.dto.changePwCommand;
 import user.service.UserService;
 import validator.RegisterRequestValidator;
 
@@ -39,6 +45,17 @@ public class UserRegistController {
 		model.addAttribute("user",new UserDto()); 
 		return "user/regist";
 	}
+	
+	@RequestMapping(value="/check.do" ,method = RequestMethod.POST)
+	public ResponseEntity check(@RequestParam("id") String id,HttpServletRequest req, HttpServletResponse resp) throws Exception{
+		ResponseEntity resEntity = null;
+		String result = userService.checkEmail(id);
+		resEntity =new ResponseEntity(result, HttpStatus.OK);
+		return resEntity;
+	}
+	
+	
+	
 	
 	@RequestMapping(value="/user/success",method=RequestMethod.GET)
 	public String regist(){

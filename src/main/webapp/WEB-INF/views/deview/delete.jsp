@@ -29,7 +29,7 @@
 			      <th>deview 제목</th>
 			      <th>주요 언어</th>
 			      <th>주요 기술</th>
-			      <th>전화 번호</th>
+			      <th>평균 답변 시간</th>
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -38,7 +38,7 @@
 			      	<td>${deview.devTitle}</td>
 			      	<td>${deview.devBigcate}</td>
 			      	<td>${deview.devSmallcate}</td>
-			      	<td>${deview.devNumber}</td>
+			      	<td>${deview.devResp}</td>
 			    </tr>
 			      <td colspan="6" class="text-right">
 			    	<button type="submit" class="btn btn-outline-secondary">삭제</button> 

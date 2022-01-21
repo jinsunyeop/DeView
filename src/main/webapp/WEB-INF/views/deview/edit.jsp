@@ -47,16 +47,35 @@
 			</div>
 			
 			 <div class="mb-3 mt-3">
-					<form:label path="devNumber" class="form-label">number</form:label><br><form:errors path="devNumber"/>
-	 				<form:input path="devNumber" class="form-control" placeholder="010-xxxx-xxxx"/>		
+					<form:label path="devResp" class="form-label">평균 답변 시간</form:label><br><form:errors path="devResp"/>
+	 				<form:select path="devResp" class="form-select" id="inputGroupSelect01">
+					    <option value="1시간 이내">1시간 이내</option>
+					    <option value="3시간 이내">3시간 이내</option>
+					    <option value="6시간 이내">6시간 이내</option>
+					    <option value="12시간 이내">12시간 이내</option>
+					     <option value="1일 이내">1일 이내</option>
+				    </form:select>
 			</div>
-
 			<button type="submit" class="btn btn-outline-secondary">edit</button> 
 		</form:form>
 	</div>
 
 
+<!-- <script type="text/javascript">
 
+function checkNumber(event) {
+	  if(event.key === '.' 
+	     || event.key === '-'
+	     || event.key >= 0 && event.key <= 9) {
+	    return true;
+	  }
+	  
+	  return false;
+	}
+
+
+</script> 
+ -->
 
 <%@ include file="/resources/layout/footer.jsp"%>
 </html>

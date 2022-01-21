@@ -1,5 +1,6 @@
 package chat.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import chat.dto.ChatDto;
 import chat.repository.ChatDao;
+import user.dto.ProfileDto;
 
 @Service
 public class ChatService {
@@ -17,19 +19,35 @@ public class ChatService {
 		this.chatDao = chatDao;
 	}
 
-	public void createChat(int request,int apply) {
-		chatDao.createChat(request, apply);
-	}
 	
 	public void insertChat(ChatDto chatDto) {
 		chatDao.insertChat(chatDto);
 	}
 	
-
+	public void insertFile(ChatDto chatDto) {
+		chatDao.insertFile(chatDto);
+	}
+	
+	
+	
+	
 	public List<ChatDto> chatById(int fromId,int toId){
+		List<ChatDto> create =  new ArrayList<ChatDto>();
+		if (chatDao.chatById(fromId, toId).size()==0) {
+			int chat_id = chatDao.createChat(fromId, toId);
+			ChatDto chat = chatDao.createChatDate(chat_id);
+			create.add(chat);
+			return create;
+		}
 		
 		return chatDao.chatById(fromId, toId);
 	}
+	
+	
+	
+	
+	
+	
 	
 //	public String chatById(int fromId, int toId){
 //		StringBuffer result = new StringBuffer("");

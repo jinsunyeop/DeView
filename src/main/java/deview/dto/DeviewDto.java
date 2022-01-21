@@ -25,10 +25,21 @@ public class DeviewDto {
 	private String devContent; //내용
 	
 	@NotEmpty
-	private String devNumber; //번호
+	private String devResp; //평균 답변시간
+	
 	private Date devDate; //개설 날짜
 	
+	private int devMatching; //매칭 개수
+	
 
+
+	public int getDevMatching() {
+		return devMatching;
+	}
+
+	public void setDevMatching(int devMatching) {
+		this.devMatching = devMatching;
+	}
 
 	public int getDevId() {
 		return devId;
@@ -78,12 +89,12 @@ public class DeviewDto {
 		this.devContent = devContent;
 	}
 
-	public String getDevNumber() {
-		return devNumber;
+	public String getDevResp() {
+		return devResp;
 	}
 
-	public void setDevNumber(String devNumber) {
-		this.devNumber = devNumber;
+	public void setDevResp(String devResp) {
+		this.devResp = devResp;
 	}
 
 	public Date getDevDate() {
