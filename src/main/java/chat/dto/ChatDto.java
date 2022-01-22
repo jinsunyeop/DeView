@@ -1,7 +1,6 @@
 package chat.dto;
 
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import org.apache.ibatis.type.Alias;

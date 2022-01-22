@@ -54,7 +54,7 @@ public class DeviewController {
 		if(keyword==null || keyword.equals("")) return null;
 		
 		keyword=keyword.toUpperCase();
-		List keywordList = deviewService.deviewSearch(keyword);
+		List<DeviewDto> keywordList = deviewService.deviewSearch(keyword);
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("keyword", keywordList);
 		String jsonInfo = jsonObject.toString();

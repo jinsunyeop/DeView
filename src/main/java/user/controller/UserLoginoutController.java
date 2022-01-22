@@ -51,7 +51,7 @@ public class UserLoginoutController {
 	
 		
 	@RequestMapping(value="/user/login",method=RequestMethod.POST)
-	public String submit(Model model,@ModelAttribute("login") @Valid LoginCommand loginCommand,BindingResult bindingResult,
+	public String login(Model model,@ModelAttribute("login") @Valid LoginCommand loginCommand,BindingResult bindingResult,
 						HttpSession session,HttpServletResponse resp) {
 		if(bindingResult.hasErrors()) {
 			return "/user/login";

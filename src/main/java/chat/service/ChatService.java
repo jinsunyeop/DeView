@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import chat.dto.ChatDto;
 import chat.repository.ChatDao;
-import user.dto.ProfileDto;
 
 @Service
 public class ChatService {

@@ -2,8 +2,6 @@ package deview.dto;
 
 import java.util.Date;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.ibatis.type.Alias;

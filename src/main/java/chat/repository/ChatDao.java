@@ -1,14 +1,12 @@
 package chat.repository;
 
-import java.util.Date;
 import java.util.List;
 
 import chat.dto.ChatDto;
 
-
 public interface ChatDao {
 	
-	public abstract int createChat(int fromId,int toId);
+	public abstract int createChat(int fromId,int toId); 
 	
 	public abstract ChatDto createChatDate(int chatId);
 	

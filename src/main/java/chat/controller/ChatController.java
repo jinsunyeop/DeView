@@ -4,11 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.List;
 
@@ -120,7 +118,6 @@ public class ChatController {
 			String filePath=req.getServletContext().getRealPath("/")+path;
 	        try {
 	        	resp.setContentType("text/html;charset=utf-8");
-	        	PrintWriter writer = resp.getWriter();
 	        	File file = new File(filePath+"//"+fileName);
 	        	if(!file.exists()) {
 	        		System.out.println("파일없음");

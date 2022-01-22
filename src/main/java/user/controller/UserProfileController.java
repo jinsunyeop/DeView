@@ -26,7 +26,6 @@ import matching.service.MatchingService;
 import user.dto.ProfileDto;
 import user.dto.UserDto;
 import user.service.ProfileService;
-import user.service.UserService;
 
 @Controller
 public class UserProfileController {
